@@ -1,3 +1,9 @@
+/*
+ *	Main handles running the Eevil Chess
+ *	Authors: Team Eevee
+ *
+ * */
+
 import java.util.*;
 
 public class Main
