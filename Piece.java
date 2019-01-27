@@ -22,8 +22,8 @@ public abstract class Piece
     public abstract void captured();
 
     // Location getter
-    public void getLoc() {
-        return location;
+    public String getLoc() {
+        return this.location;
     }
 
     // Location setter
