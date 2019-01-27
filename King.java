@@ -8,4 +8,13 @@
 
 public class King extends Piece {
     // TODO: Define special behavior for King
+
+    public Boolean isThreatened(): {
+        /* isThreatened() returns true if the King is in check,
+         * and false otherwise.
+         */
+        
+         //TODO: How is this to be implemented? Should we use an Observer pattern?
+         return false;
+    }
 }
