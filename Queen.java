@@ -10,5 +10,20 @@
 
 public class Queen extends Piece
 {
-    //TODO: add queen specific functions
+    private boolean captured = false;
+
+    public void move(String spot)
+    {
+        this.location = spot;
+    }
+
+    public void capture()
+    {
+        captured = true;
+    }
+
+    public boolean captured()
+    {
+        return captured;
+    }
 }
