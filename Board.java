@@ -3,10 +3,10 @@ import java.util.Map;
 
 public class board
 {
+    private static final int MAX_COLS = 26;
     private Map<String, Object> board = null;
     //Placeholder for tile object
     Object TILE;
-
 
     board(int cols, int rows)
     {
@@ -15,6 +15,12 @@ public class board
 
     private void buildTable(int cols, int rows)
     {
+        //Temp solution
+        //TODO: Make columns infinitely expandable like rows
+        if(cols > MAX_COLS)
+        {
+            cols = MAX_COLS;
+        }
         for(int i = 0; i < cols; i++)
         {
             String column = "" + getCharValue(i);
