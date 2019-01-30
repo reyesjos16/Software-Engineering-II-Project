@@ -5,6 +5,7 @@ public class board
 {
     private static final int MAX_COLS = 26;
     private Map<String, Object> board = null;
+    private int columns = 0, rows = 0;
     //Placeholder for tile object
     Object TILE;
 
@@ -13,7 +14,7 @@ public class board
         this.buildTable(cols, rows);
     }
 
-    private void buildTable(int cols, int rows)
+    private void buildTable(int cols, int rws)
     {
         //Temp solution
         //TODO: Make columns infinitely expandable like rows
@@ -21,12 +22,17 @@ public class board
         {
             cols = MAX_COLS;
         }
+        columns = cols;
+        rows = rws;
         for(int i = 0; i < cols; i++)
         {
+            //Build column string part
             String column = "" + getCharValue(i);
-            for(int j = 1; j < rows+1; j++)
+            for(int j = 1; j < rws+1; j++)
             {
+                //Build row string part
                 String row = "" + i;
+                //Build tile
                 board.put(column + row, TILE);
             }
         }
@@ -40,6 +46,16 @@ public class board
     public Map<String, Object> getBoard()
     {
         return board;
+    }
+
+    private int colCount()
+    {
+        return columns;
+    }
+
+    private int rowCount()
+    {
+        return rows;
     }
 
     //Returns tile if it exists
