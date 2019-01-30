@@ -31,7 +31,7 @@ public class board
             for(int j = 1; j < rws+1; j++)
             {
                 //Build row string part
-                String row = "" + i;
+                String row = "" + j;
                 //Build tile
                 board.put(column + row, TILE);
             }
