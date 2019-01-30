@@ -42,16 +42,11 @@ public class board
         return board;
     }
 
+    //Returns tile if it exists
+    //null if tile doesn't exist
     public TILE getTile(String position)
     {
-        if(board.containsKey(position))
-        {
-            return board.get(position);
-        }
-        else
-        {
-            return null;
-        }
+        return board.get(position);
     }
 
     public void placeOnTile(String position, Object TILE)
