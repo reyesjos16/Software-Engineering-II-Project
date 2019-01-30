@@ -48,12 +48,12 @@ public class board
         return board;
     }
 
-    private int colCount()
+    public int colCount()
     {
         return columns;
     }
 
-    private int rowCount()
+    public int rowCount()
     {
         return rows;
     }
