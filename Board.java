@@ -38,7 +38,7 @@ public class board
         }
     }
 
-    private char getCharValue(int i)
+    private static char getCharValue(int i)
     {
         return (char)(i+97);
     }
