@@ -8,8 +8,10 @@
 
 public class King extends Piece {
     // TODO: Define special behavior for King
-
-    public Boolean isThreatened(): {
+    public King() {
+        super();
+    }
+    public Boolean isThreatened() {
         /* isThreatened() returns true if the King is in check,
          * and false otherwise.
          */
