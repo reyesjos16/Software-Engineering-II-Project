@@ -1,21 +1,22 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class board
+public class Board
 {
     private static final int MAX_COLS = 26;
-    private Map<String, Object> board = null;
+    private HashMap<String, Tile> board = null;
     private int columns = 0, rows = 0;
     //Placeholder for tile object
     Object TILE;
 
-    board(int cols, int rows)
+    Board(int cols, int rows)
     {
         this.buildTable(cols, rows);
     }
 
     private void buildTable(int cols, int rws)
     {
+        board = new HashMap<>();
         //Temp solution
         //TODO: Make columns infinitely expandable like rows
         if(cols > MAX_COLS)
@@ -33,7 +34,9 @@ public class board
                 //Build row string part
                 String row = "" + j;
                 //Build tile
-                board.put(column + row, TILE);
+                //How should we build the tile? default constr?
+                Tile newtile = new Tile();
+                board.put(column + row, newtile);
             }
         }
     }
@@ -43,7 +46,7 @@ public class board
         return (char)(i+97);
     }
 
-    public Map<String, Object> getBoard()
+    public HashMap<String, Tile> getBoard()
     {
         return board;
     }
@@ -60,13 +63,14 @@ public class board
 
     //Returns tile if it exists
     //null if tile doesn't exist
-    public TILE getTile(String position)
+    public Tile getTile(String position)
     {
         return board.get(position);
     }
 
-    public void placeOnTile(String position, Object TILE)
+    //TODO: change this to add pieces to a tile rather than tiles to the board
+    public void placeOnTile(String position, Tile newtile)
     {
-        board.put(position, TILE);
+        board.put(position, newtile);
     }
 }
