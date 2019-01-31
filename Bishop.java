@@ -2,6 +2,9 @@
 
 public class Bishop extends Piece {
 
+    public Bishop(){
+        super()
+    }
     // TODO: Add Bishop specific functionality
     public void move(String location) {
         // Changes the piece's location to a new square
