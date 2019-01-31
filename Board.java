@@ -6,8 +6,6 @@ public class Board
     private static final int MAX_COLS = 26;
     private HashMap<String, Tile> board = null;
     private int columns = 0, rows = 0;
-    //Placeholder for tile object
-    Object TILE;
 
     Board(int cols, int rows)
     {
