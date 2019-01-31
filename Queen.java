@@ -14,7 +14,7 @@ public class Queen extends Piece
 
     public void move(String spot)
     {
-        this.location = spot;
+        this.setLoc(spot);
     }
 
     public void capture()

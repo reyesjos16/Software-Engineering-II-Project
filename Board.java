@@ -33,7 +33,7 @@ public class Board
                 //Build row string part
                 String row = "" + j;
                 //Build tile
-                //How should we build the tile? default constr?
+                //TODO: How should we build the tile? default constr?
                 Tile newtile = new Tile();
                 board.put(column + row, newtile);
             }
@@ -71,7 +71,7 @@ public class Board
         return board.get(position);
     }
 
-    //TODO: change this to add pieces to a tile rather than tiles to the board
+    //TODO: change this to add pieces to a tile rather than tiles to the board?
     //Place a piece on a tile?
     public void placeOnTile(String position, Tile newtile)
     {
