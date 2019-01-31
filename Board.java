@@ -14,6 +14,7 @@ public class Board
         this.buildTable(cols, rows);
     }
 
+    //Builds a table given the dimensions wanted
     private void buildTable(int cols, int rws)
     {
         board = new HashMap<>();
@@ -41,21 +42,25 @@ public class Board
         }
     }
 
+    //ACII value of lowercase letters aka 0+97 = a, 1+97 = b
     private static char getCharValue(int i)
     {
         return (char)(i+97);
     }
 
+    //Get the board
     public HashMap<String, Tile> getBoard()
     {
         return board;
     }
 
+    //How many columns are on the board?
     public int colCount()
     {
         return columns;
     }
 
+    //How many rows are on the board?
     public int rowCount()
     {
         return rows;
@@ -69,6 +74,7 @@ public class Board
     }
 
     //TODO: change this to add pieces to a tile rather than tiles to the board
+    //Place a piece on a tile?
     public void placeOnTile(String position, Tile newtile)
     {
         board.put(position, newtile);
