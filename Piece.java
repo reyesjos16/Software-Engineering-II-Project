@@ -8,12 +8,13 @@
 public abstract class Piece
 {
     // Current location of piece on the board
-    private String location = null;
+    private int xcoordinate;
+    private int ycoordinate;
 
     // Abstract functions each piece must have
     
     // TODO: Define what input for move is required
-    public abstract void move();
+    public abstract void move(int newX, int newY);
 
     // TODO: Define input for capture and captured
     // TODO: Is captured required?
@@ -23,12 +24,16 @@ public abstract class Piece
 
     // Location getter
     public String getLoc() {
-        return this.location;
+        arrLocation = new int[2];
+        arrLocation[0] = this.xcoordinate;
+        arrLocation[1] = this.ycoordinate;
+        return arrLocation;
     }
 
     // Location setter
-    public void setLoc(String loc) {
-        this.location = loc;
+    public void setLoc(int newX, int newY) {
+        this.xcoordinate = newX;
+        this.ycoordinate = newY;
     }
 
     // King will implement it's own "threatened" method
