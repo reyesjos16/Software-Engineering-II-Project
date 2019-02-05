@@ -8,8 +8,8 @@
 public abstract class Piece
 {
     // Current location of piece on the board
-    private int xcoordinate;
-    private int ycoordinate;
+    protected int xcoordinate;
+    protected int ycoordinate;
 
     // Abstract functions each piece must have
     
