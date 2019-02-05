@@ -19,7 +19,7 @@ public abstract class Piece
     // TODO: Is captured required?
     public abstract void capture();
 
-    public abstract void captured();
+    public abstract Boolean captured();
 
     // Location getter
     public String getLoc() {
