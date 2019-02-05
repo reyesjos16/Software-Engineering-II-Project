@@ -23,7 +23,7 @@ public abstract class Piece
     public abstract boolean captured();
 
     // Location getter
-    public String getLoc() {
+    public int[] getLoc() {
         arrLocation = new int[2];
         arrLocation[0] = this.xcoordinate;
         arrLocation[1] = this.ycoordinate;
