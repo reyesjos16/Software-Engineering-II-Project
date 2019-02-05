@@ -40,7 +40,11 @@ public class Board
         }
     }
 
-    //ACII value of lowercase letters aka 0+97 = a, 1+97 = b
+    //ACII value of lowercase letters
+    //0  = a
+    //1  = b
+    //...
+    //25 = z
     private static char getCharValue(int i)
     {
         return (char)(i+97);
@@ -71,10 +75,13 @@ public class Board
         return board.get(position);
     }
 
-    //TODO: change this to add pieces to a tile rather than tiles to the board?
-    //Place a piece on a tile?
-    public void placeOnTile(String position, Tile newtile)
+    public Tile getTile(int col, int row)
     {
-        board.put(position, newtile);
+        return this.getTile("" + getCharValue(col) + row);
+    }
+
+    public void placeOnTile(String position, Piece chesspiece)
+    {
+        board.get(position).setPiece(chesspiece);
     }
 }
