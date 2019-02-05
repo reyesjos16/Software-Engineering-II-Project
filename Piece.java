@@ -7,6 +7,11 @@
 
 public abstract class Piece
 {
+    public Piece(int xCor, int yCor) {
+        this.xcoordinate = xCor;
+        this.ycoordinate = yCor;
+    }
+    
     // Current location of piece on the board
     protected int xcoordinate;
     protected int ycoordinate;
