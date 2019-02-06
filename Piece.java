@@ -28,9 +28,13 @@ public abstract class Piece
 
     // Abstract functions each piece must have
     
-    // Changed move() to validMoveList(). Might make more sense for the player to move,
-    // and each piece knows it's own valid moves
-    public abstract ArrayList<Tile> validMoveList();
+    // TODO: Discuss whether pieces should move themselves (current model)
+    // or have Player move pieces (would require validMoveList(), currently
+    // commented out below:
+    
+    /* public abstract ArrayList<Tile> validMoveList(); */
+
+    public abstract void move(int newX, int newY);
 
     // TODO: Decide if capture() and captured() are still necessary
 
@@ -44,7 +48,7 @@ public abstract class Piece
 
     public int getXcoordinate() { return this.xcoordinate; }
 
-    public int getYCoordinate() { return this.ycoordinate; }
+    public int getYcoordinate() { return this.ycoordinate; }
 
     public String getName() { return this.name; }
 
@@ -56,9 +60,9 @@ public abstract class Piece
 
     /* Setters */
 
-    public void setXCoordinate(int newX) { this.xcoordinate = newX; }
+    public void setXcoordinate(int newX) { this.xcoordinate = newX; }
 
-    public void setYCoordinate(int newY) { this.ycoordinate = newY; }
+    public void setYcoordinate(int newY) { this.ycoordinate = newY; }
 
     public void setName(String pieceName) { this.name = pieceName; }
 
