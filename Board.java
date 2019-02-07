@@ -82,6 +82,6 @@ public class Board
 
     public void placeOnTile(String position, Piece chesspiece)
     {
-        board.get(position).setPiece(chesspiece);
+        this.board.get(position).setPiece(chesspiece);
     }
 }
