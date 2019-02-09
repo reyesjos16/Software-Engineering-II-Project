@@ -10,6 +10,13 @@
 
 public class Rook extends Piece
 {
+    Rook(int x, int y, Player p, Board b)
+    {
+        super("rook", p, b);
+        this.setXcoordinate(x);
+        this.setYcoordinate(y);
+    }
+
     private boolean captured = false;
 
     public boolean moveIsValid(String spot)
@@ -18,9 +25,9 @@ public class Rook extends Piece
         return true;
     }
 
-    public void move(String spot)
+    public void move(int x, int y)
     {
-        this.location = spot;
+
     }
 
     public void capture()

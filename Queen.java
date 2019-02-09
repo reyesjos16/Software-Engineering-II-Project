@@ -10,11 +10,18 @@
 
 public class Queen extends Piece
 {
+    Queen(int x, int y, Player p, Board b)
+    {
+        super("queen", p, b);
+        this.setXcoordinate(x);
+        this.setYcoordinate(y);
+    }
+
     private boolean captured = false;
 
-    public void move(String spot)
+    public void move(int x, int y)
     {
-        this.setLoc(spot);
+
     }
 
     public void capture()
