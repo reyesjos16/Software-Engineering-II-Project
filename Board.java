@@ -77,7 +77,7 @@ public class Board
 
     public Tile getTile(int col, int row)
     {
-        return this.getTile("" + getCharValue(col) + row);
+        return this.getTile("" + getCharValue(col) + (row - 1));
     }
 
     public void placeOnTile(String position, Piece chesspiece)
