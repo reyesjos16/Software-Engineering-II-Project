@@ -18,7 +18,7 @@ public class King extends Piece {
     
     public void capture() {}
     
-    public boolean captured() {}
+    public boolean captured() {return false;}
     
     public Boolean isThreatened() {
         /* isThreatened() returns true if the King is in check,

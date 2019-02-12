@@ -19,5 +19,6 @@ public class Bishop extends Piece {
 
     public boolean captured() {
         // Not sure if this is required; if it is not, it will be removed
+        return false;
     }
 }
