@@ -1,13 +1,18 @@
 public class Knight extends Piece{
-        public Knight(){
-            super();
+
+    Knight(int x, int y, Player p, Board b){
+        super("knight", p, b);
+        this.setXcoordinate(x);
+        this.setYcoordinate(y);
     }
-    public void move(){
-    }
-    public void capture(){
+
+    private boolean captured = false;
+
+    public void move(int newX, int newY){
+
 
     }
-    public void captured(){
+    public void capture(){captured = true;}
+    public boolean captured(){return captured;}
 
-    }
 }
