@@ -58,7 +58,7 @@ public abstract class Piece
 
     public String getImagePath() { return this.imagePath; }
 
-    public String getBoard() { return this.board; }
+    public Board getBoard() { return this.board; }
 
     /* Setters */
 
