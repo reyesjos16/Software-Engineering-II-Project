@@ -14,6 +14,12 @@ public class King extends Piece {
         this.setYcoordinate(y);
     }
     
+    public void move(int x, int y) {}
+    
+    public void capture() {}
+    
+    public boolean captured() {}
+    
     public Boolean isThreatened() {
         /* isThreatened() returns true if the King is in check,
          * and false otherwise.
