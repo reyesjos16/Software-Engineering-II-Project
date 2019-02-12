@@ -2,8 +2,10 @@
 
 public class Bishop extends Piece {
 
-    public Bishop(){
-        super()
+    Bishop(int x, int y, Player p, Board b) {
+        super("bishop", p, b);
+        this.setXcoordinate(x);
+        this.setYcoordinate(y);
     }
     // TODO: Add Bishop specific functionality
     public void move(String location) {
