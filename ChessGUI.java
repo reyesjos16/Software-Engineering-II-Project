@@ -25,7 +25,6 @@ public class ChessGUI {
         initializeGui();
     }
 
-
     public final void initializeGui() {
         
         // set up the main GUI
@@ -44,7 +43,12 @@ public class ChessGUI {
 
         chessBoard = new JPanel(new GridLayout(0, 9)) {
 
-            
+            /**
+             * Override the preferred size to return the largest it can, in
+             * a square shape.  Must (must, must) be added to a GridBagLayout
+             * as the only component (it uses the parent as a guide to size)
+             * with no GridBagConstaint (so it is centered).
+             */
             @Override
             public final Dimension getPreferredSize() {
                 Dimension d = super.getPreferredSize();
@@ -101,7 +105,9 @@ public class ChessGUI {
             }
         }
 
-        
+        /*
+         * fill the chess board
+         */
         chessBoard.add(new JLabel(""));
         // fill the top row
         for (int ii = 0; ii < 8; ii++) {
@@ -127,10 +133,24 @@ public class ChessGUI {
         return gui;
     }
     public static void main(String[] args) {
-        Runnable r = new Runnable() 
-        {
+        Runnable r = new Runnable() {
 
-           
+            @Override
+            public void run() {
+                ChessGUI cg = new ChessGUI();
+
+                JFrame f = new JFrame("ChessChamp");
+                f.add(cg.getGui());
+                
+                f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                f.setLocationByPlatform(true);
+
+                f.pack();
+                
+                f.setMinimumSize(f.getSize());
+                f.setVisible(true);
+            }
         };
         SwingUtilities.invokeLater(r);
     }
+}
