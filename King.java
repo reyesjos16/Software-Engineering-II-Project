@@ -8,9 +8,12 @@
 
 public class King extends Piece {
     // TODO: Define special behavior for King
-    public King() {
-        super();
+    King(int x, int y, Player p, Board b) {
+        super("king", p, b);
+        this.setXcoordinate(x);
+        this.setYcoordinate(y);
     }
+    
     public Boolean isThreatened() {
         /* isThreatened() returns true if the King is in check,
          * and false otherwise.
