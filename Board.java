@@ -66,7 +66,9 @@ public class Board
         }
     }
 
-    /* rows - 1 row
+    /* Populates a board with the initial chess pieces
+     *
+     * rows - 1 row
      * rows - 2 row (pawn row)
      * ...
      * row 1 (pawn row)
