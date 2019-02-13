@@ -1,5 +1,4 @@
 import java.util.HashMap;
-import java.util.Map;
 
 public class Board
 {
@@ -40,6 +39,62 @@ public class Board
         }
     }
 
+    //Helper function for populateTable
+    //given a column number return the piece it matches on a normal chessboard on row 0
+    private Piece getSpecialPiece(int num, int xpos, int ypos, Player p)
+    {
+        switch(num)
+        {
+            case 0:
+                return new Rook(xpos, ypos, p, this);
+            case 1:
+                return new Knight(xpos, ypos, p, this);
+            case 2:
+                return new Bishop(xpos, ypos, p, this);
+            case 3:
+                return new King(xpos, ypos, p, this);
+            case 4:
+                return new Queen(xpos, ypos, p, this);
+            case 5:
+                return new Bishop(xpos, ypos, p, this);
+            case 6:
+                return new Knight(xpos, ypos, p, this);
+            case 7:
+                return new Rook(xpos, ypos, p, this);
+            default:
+                return null;
+        }
+    }
+
+    /* rows - 1 row
+     * rows - 2 row (pawn row)
+     * ...
+     * row 1 (pawn row)
+     * row 0
+     *
+     * white special pieces will always be row 0 while blacks will be rows - 1
+     * white pawns will always be row 1 while blacks will be rows - 2
+     * Taking these assumptions we only need to find the X starting positions to iterate on for white and black
+     */
+    private void populateTable(Player white, Player black)
+    {
+        //Starting positions for iterations, assumes board is at least 8 columns
+        int startcolW = (columns/2) - 4;
+        int startcolB = (columns/2) + 3;
+        //Place pieces
+        for(int i = 0; i < 8; i++)
+        {
+            //White special piece
+            this.placeOnTile(startcolW + i, 0, getSpecialPiece(i, startcolW + i, 0, white));
+            //White pawn
+            this.placeOnTile(startcolW + i, 1, new Pawn(startcolW + i, 1, white, this));
+            //Black special piece
+            this.placeOnTile(startcolB - i, rows - 1, getSpecialPiece(i, startcolB - i, rows - 1, black));
+            //Black pawn
+            this.placeOnTile(startcolB - i, rows - 2, new Pawn(startcolB - i, rows - 2, black, this));
+        }
+    }
+
     //ACII value of lowercase letters
     //0  = a
     //1  = b
@@ -70,11 +125,14 @@ public class Board
 
     //Returns tile if it exists
     //null if tile doesn't exist
+    //format: <column_char><row_index>
+    //ex: "a1"; b6; d3; etc.
     public Tile getTile(String position)
     {
         return board.get(position);
     }
 
+    //0,0 = a1; 1,1 = b2; 2,2 = c3; etc.
     public Tile getTile(int col, int row)
     {
         return this.getTile("" + getCharValue(col) + (row + 1));
@@ -83,5 +141,10 @@ public class Board
     public void placeOnTile(String position, Piece chesspiece)
     {
         this.board.get(position).setPiece(chesspiece);
+    }
+
+    public void placeOnTile(int x, int y, Piece chesspiece)
+    {
+        this.placeOnTile(("" + getCharValue(x)) + (y + 1), chesspiece);
     }
 }
