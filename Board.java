@@ -75,12 +75,19 @@ public class Board
      * white special pieces will always be row 0 while blacks will be rows - 1
      * white pawns will always be row 1 while blacks will be rows - 2
      * Taking these assumptions we only need to find the X starting positions to iterate on for white and black
+     * Build white left to right and build black right to left
+     *
+     * MINIMUM BOARD SIZE OF 8 COLUMNS AND 4 ROWS
      */
     private void populateTable(Player white, Player black)
     {
+        if(columns < 8 || rows < 4)
+        {
+            System.err.println("populateTable called on board with invalid size");
+        }
         //Starting positions for iterations, assumes board is at least 8 columns
-        int startcolW = (columns/2) - 4;
-        int startcolB = (columns/2) + 3;
+        int startcolW = (columns/2) - 4; //0 on an 8x? board
+        int startcolB = (columns/2) + 3; //7 on an 8x? board
         //Place pieces
         for(int i = 0; i < 8; i++)
         {
