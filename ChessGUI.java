@@ -5,6 +5,8 @@ import javax.swing.*;
 import javax.swing.border.*;
 import java.net.URL;
 import javax.imageio.ImageIO;
+import java.util.*;
+import java.lang.Runnable;
 
 public class ChessGUI 
 {
@@ -13,12 +15,12 @@ public class ChessGUI
     private JButton[][] chessBoardSquares = new JButton[8][8];
     private Image[][] chessPieceImages = new Image[2][6];
     private JPanel chessBoard;
-   
+
     private static final String COLS = "ABCDEFGH";
     public static final int QUEEN = 0, KING = 1,
             ROOK = 2, KNIGHT = 3, BISHOP = 4, PAWN = 5;
     public static final int[] STARTING_ROW = {
-        ROOK, KNIGHT, BISHOP, KING, QUEEN, BISHOP, KNIGHT, ROOK
+            ROOK, KNIGHT, BISHOP, KING, QUEEN, BISHOP, KNIGHT, ROOK
     };
 
     public static final int red = 0, pink = 1;
@@ -28,9 +30,15 @@ public class ChessGUI
         initializeGui();
     }
 
+<<<<<<< HEAD
     public final void initializeGui() 
     {
         
+=======
+
+    public final void initializeGui() {
+
+>>>>>>> ccdff53c19cee28b5f1e79e52fd43820682bc2a3
         // set up the main GUI
         gui.setBorder(new EmptyBorder(5, 5, 5, 5));
         JToolBar tools = new JToolBar();
@@ -49,6 +57,10 @@ public class ChessGUI
         {
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> ccdff53c19cee28b5f1e79e52fd43820682bc2a3
             @Override
             public final Dimension getPreferredSize() 
             {
@@ -57,10 +69,10 @@ public class ChessGUI
                 Component c = getParent();
                 if (c == null) {
                     prefSize = new Dimension(
-                            (int)d.getWidth(),(int)d.getHeight());
-                } else if (c!=null &&
-                        c.getWidth()>d.getWidth() &&
-                        c.getHeight()>d.getHeight()) {
+                            (int) d.getWidth(), (int) d.getHeight());
+                } else if (c != null &&
+                        c.getWidth() > d.getWidth() &&
+                        c.getHeight() > d.getHeight()) {
                     prefSize = c.getSize();
                 } else {
                     prefSize = d;
@@ -68,16 +80,22 @@ public class ChessGUI
                 int w = (int) prefSize.getWidth();
                 int h = (int) prefSize.getHeight();
                 // the smaller of the two sizes
-                int s = (w>h ? h : w);
-                return new Dimension(s,s);
+                int s = (w > h ? h : w);
+                return new Dimension(s, s);
             }
         };
         chessBoard.setBorder(new CompoundBorder(
+<<<<<<< HEAD
                 new EmptyBorder(8,8,8,8),
                 new LineBorder(Color.red)
                 ));
+=======
+                new EmptyBorder(8, 8, 8, 8),
+                new LineBorder(Color.BLACK)
+        ));
+>>>>>>> ccdff53c19cee28b5f1e79e52fd43820682bc2a3
         // Set the BG to be ochre
-        Color ochre = new Color(204,119,34);
+        Color ochre = new Color(204, 119, 34);
         chessBoard.setBackground(ochre);
         JPanel boardConstrain = new JPanel(new GridBagLayout());
         boardConstrain.setBackground(ochre);
@@ -105,16 +123,20 @@ public class ChessGUI
             }
         }
 
+<<<<<<< HEAD
         /*
          * fill the chess board
          */
+=======
+
+>>>>>>> ccdff53c19cee28b5f1e79e52fd43820682bc2a3
         chessBoard.add(new JLabel(""));
         
         for (int ii = 0; ii < 8; ii++) 
         {
             chessBoard.add(
                     new JLabel(COLS.substring(ii, ii + 1),
-                    SwingConstants.CENTER));
+                            SwingConstants.CENTER));
         }
         
         for (int ii = 0; ii < 8; ii++) 
@@ -124,7 +146,7 @@ public class ChessGUI
                 switch (jj) 
                 {
                     case 0:
-                        chessBoard.add(new JLabel("" + (9-(ii + 1)),
+                        chessBoard.add(new JLabel("" + (9 - (ii + 1)),
                                 SwingConstants.CENTER));
                     default:
                         chessBoard.add(chessBoardSquares[jj][ii]);
@@ -137,6 +159,7 @@ public class ChessGUI
     {
         return gui;
     }
+<<<<<<< HEAD
     public static void main(String[] args) 
     {
         Runnable r = new Runnable() 
@@ -157,6 +180,14 @@ public class ChessGUI
                 
                 f.setMinimumSize(f.getSize());
                 f.setVisible(true);
+=======
+
+    public static void main(String[] args) {
+        Runnable r = new Runnable(){
+            @Override
+            public void run() {
+
+>>>>>>> ccdff53c19cee28b5f1e79e52fd43820682bc2a3
             }
         };
         SwingUtilities.invokeLater(r);

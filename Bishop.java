@@ -8,9 +8,8 @@ public class Bishop extends Piece {
         this.setYcoordinate(y);
     }
     // TODO: Add Bishop specific functionality
-    public void move(String location) {
-        // Changes the piece's location to a new square
-        this.location = location;
+    public void move(int x, int y) {
+        
     }
 
     public void capture() {
@@ -18,7 +17,8 @@ public class Bishop extends Piece {
         // is moved, that piece is captured.
     }
 
-    public void captured() {
+    public boolean captured() {
         // Not sure if this is required; if it is not, it will be removed
+        return false;
     }
 }
