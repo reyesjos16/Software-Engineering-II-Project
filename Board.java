@@ -66,7 +66,7 @@ public class Board
         }
     }
 
-    /* Populates a board with the initial chess pieces
+    /* Populates a board with the normal initial chess pieces
      *
      * rows - 1 row
      * rows - 2 row (pawn row)
@@ -81,11 +81,11 @@ public class Board
      *
      * MINIMUM BOARD SIZE OF 8 COLUMNS AND 4 ROWS
      */
-    private void populateTable(Player white, Player black)
+    private void populateTableNormal(Player white, Player black)
     {
         if(columns < 8 || rows < 4)
         {
-            System.err.println("populateTable called on board with invalid size");
+            System.err.println("populateTableNormal called on board with invalid size");
         }
         //Starting positions for iterations, assumes board is at least 8 columns
         int startcolW = (columns/2) - 4; //0 on an 8x? board
