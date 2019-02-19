@@ -8,7 +8,7 @@ import javax.imageio.ImageIO;
 import java.util.*;
 import java.lang.Runnable;
 
-public class ChessGUI 
+public class ChessGUI
 {
 
     private final JPanel gui = new JPanel(new BorderLayout(3, 3));
@@ -23,46 +23,39 @@ public class ChessGUI
             ROOK, KNIGHT, BISHOP, KING, QUEEN, BISHOP, KNIGHT, ROOK
     };
 
+    Color Vap1 = new Color(115,207,234);
+    Color Vap2 = new Color(51,114,152);
+
     public static final int red = 0, pink = 1;
 
-    ChessGUI() 
+    ChessGUI()
     {
         initializeGui();
     }
 
-<<<<<<< HEAD
-    public final void initializeGui() 
-    {
-        
-=======
 
     public final void initializeGui() {
 
->>>>>>> ccdff53c19cee28b5f1e79e52fd43820682bc2a3
         // set up the main GUI
         gui.setBorder(new EmptyBorder(5, 5, 5, 5));
         JToolBar tools = new JToolBar();
         tools.setFloatable(false);
         gui.add(tools, BorderLayout.PAGE_START);
 
-        tools.add(new JButton("Save")); 
-        tools.add(new JButton("Restore")); 
+        tools.add(new JButton("Save"));
+        tools.add(new JButton("Restore"));
         tools.addSeparator();
-        tools.add(new JButton("Resign"));  
+        tools.add(new JButton("Resign"));
         tools.addSeparator();
 
         gui.add(new JLabel("?"), BorderLayout.LINE_START);
 
-        chessBoard = new JPanel(new GridLayout(0, 9)) 
+        chessBoard = new JPanel(new GridLayout(0, 9))
         {
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> ccdff53c19cee28b5f1e79e52fd43820682bc2a3
             @Override
-            public final Dimension getPreferredSize() 
+            public final Dimension getPreferredSize()
             {
                 Dimension d = super.getPreferredSize();
                 Dimension prefSize = null;
@@ -85,20 +78,14 @@ public class ChessGUI
             }
         };
         chessBoard.setBorder(new CompoundBorder(
-<<<<<<< HEAD
-                new EmptyBorder(8,8,8,8),
-                new LineBorder(Color.red)
-                ));
-=======
                 new EmptyBorder(8, 8, 8, 8),
                 new LineBorder(Color.BLACK)
         ));
->>>>>>> ccdff53c19cee28b5f1e79e52fd43820682bc2a3
         // Set the BG to be ochre
-        Color ochre = new Color(204, 119, 34);
-        chessBoard.setBackground(ochre);
+        Color Vap3 = new Color(233, 246, 255);
+        chessBoard.setBackground(Vap3);
         JPanel boardConstrain = new JPanel(new GridBagLayout());
-        boardConstrain.setBackground(ochre);
+        boardConstrain.setBackground(Vap3);
         boardConstrain.add(chessBoard);
         gui.add(boardConstrain);
 
@@ -108,42 +95,39 @@ public class ChessGUI
             for (int jj = 0; jj < chessBoardSquares[ii].length; jj++) {
                 JButton b = new JButton();
                 b.setMargin(buttonMargin);
-                
+
                 ImageIcon icon = new ImageIcon(
                         new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB));
                 b.setIcon(icon);
                 if ((jj % 2 == 1 && ii % 2 == 1)
-                        
+
                         || (jj % 2 == 0 && ii % 2 == 0)) {
-                    b.setBackground(Color.pink);
+                    b.setBackground(Vap2);
                 } else {
-                    b.setBackground(Color.red);
+                    b.setBackground(Vap1);
                 }
                 chessBoardSquares[jj][ii] = b;
             }
         }
 
-<<<<<<< HEAD
         /*
          * fill the chess board
          */
-=======
 
->>>>>>> ccdff53c19cee28b5f1e79e52fd43820682bc2a3
         chessBoard.add(new JLabel(""));
-        
-        for (int ii = 0; ii < 8; ii++) 
+
+        for (int ii = 0; ii < 8; ii++)
         {
             chessBoard.add(
                     new JLabel(COLS.substring(ii, ii + 1),
                             SwingConstants.CENTER));
         }
-        
-        for (int ii = 0; ii < 8; ii++) 
+
+        for (int ii = 0; ii < 8; ii++)
         {
-            for (int jj = 0; jj < 8; jj++) 
+            for (int jj = 0; jj < 8; jj++)
             {
-                switch (jj) 
+                switch (jj)
                 {
                     case 0:
                         chessBoard.add(new JLabel("" + (9 - (ii + 1)),
@@ -155,40 +139,25 @@ public class ChessGUI
         }
     }
 
-    public final JComponent getGui() 
+    public final JComponent getGui()
     {
         return gui;
     }
-<<<<<<< HEAD
-    public static void main(String[] args) 
-    {
-        Runnable r = new Runnable() 
-        {
 
-            @Override
-            public void run() 
-            {
-                ChessGUI cg = new ChessGUI();
-
-                JFrame f = new JFrame("Eevil Chess");
-                f.add(cg.getGui());
-                
-                f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                f.setLocationByPlatform(true);
-
-                f.pack();
-                
-                f.setMinimumSize(f.getSize());
-                f.setVisible(true);
-=======
-
-    public static void main(String[] args) {
+    public static void main(String[] args){
         Runnable r = new Runnable(){
             @Override
-            public void run() {
-
->>>>>>> ccdff53c19cee28b5f1e79e52fd43820682bc2a3
+            public void run(){
+                ChessGUI cg = new ChessGUI();
+                JFrame f = new JFrame("ChessChamp");
+                f.add(cg.getGui());
+                f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                f.setLocationByPlatform(true);
+                f.pack();
+                f.setMinimumSize(f.getSize());
+                f.setVisible(true);
             }
+
         };
         SwingUtilities.invokeLater(r);
     }
