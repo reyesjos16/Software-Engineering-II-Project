@@ -156,4 +156,19 @@ public class Board
     {
         this.placeOnTile(("" + getCharValue(x)) + (y + 1), chesspiece);
     }
+
+    public String getPieceImage(String pos)
+    {
+        Piece x = board.get(pos).getPiece();
+        if(x == null)
+        {
+            return "";
+        }
+        return x.getImagePath();
+    }
+
+    public String getPieceImage(int x, int y)
+    {
+        return getPieceImage(("" + getCharValue(x)) + (y + 1));
+    }
 }
