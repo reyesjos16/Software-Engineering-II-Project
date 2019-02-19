@@ -132,8 +132,15 @@ public class ChessGUI {
     public static void main(String[] args) {
         Runnable r = new Runnable(){
             @Override
-            public void run() {
-
+            public void run(){
+                ChessGUI cg = new ChessGUI();
+                JFrame f = new JFrame("ChessChamp");
+                f.add(cg.getGui());
+                f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                f.setLocationByPlatform(true);
+                f.pack();
+                f.setMinimumSize(f.getSize());
+                f.setVisible(true);
             }
         };
         SwingUtilities.invokeLater(r);
