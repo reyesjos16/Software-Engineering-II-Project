@@ -26,6 +26,7 @@ public abstract class Piece
         this.xcoordinate = -1;   // Set location to "null"
         this.ycoordinate = -1;   // TODO: Discuss what should be used for null value?
         this.board = board;
+        this.imagePath = "~/pieces/"
     }
 
     // Abstract functions each piece must have
