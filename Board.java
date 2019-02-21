@@ -81,7 +81,7 @@ public class Board
      *
      * MINIMUM BOARD SIZE OF 8 COLUMNS AND 4 ROWS
      */
-    private void populateTableNormal(Player white, Player black)
+    public void populateTableNormal(Player white, Player black)
     {
         if(columns < 8 || rows < 4)
         {
