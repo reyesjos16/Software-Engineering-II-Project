@@ -35,9 +35,7 @@ public abstract class Piece
     // or have Player move pieces (would require validMoveList(), currently
     // commented out below:
     
-    /* public abstract ArrayList<Tile> validMoveList(); */
-
-    public abstract void move(int newX, int newY);
+    public abstract ArrayList<Tile> validMoveList();
 
     // TODO: Decide if capture() and captured() are still necessary
 
