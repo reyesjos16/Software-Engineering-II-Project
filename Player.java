@@ -1,24 +1,10 @@
-public class Player
-{
-    private boolean iswhite;
+public class Player {
 
-    //clr should always be white or black, case insensitive
-    Player(String clr)
-    {
-        iswhite = clr.toLowerCase().equals("white");
+    public enum PlayerColor{
+        WHITE,BLACK
+
     }
-
-    public String getColor()
-    {
-        if(iswhite)
-        {
-            return "white";
-        }
-        else return "black";
-    }
-
-    public void move(int x, int y)
-    {
+    public void move(int x, int y){
 
     }
 
