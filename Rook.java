@@ -8,6 +8,8 @@
  *         X
  */
 
+import java.util.ArrayList;
+
 public class Rook extends Piece
 {
     Rook(int x, int y, Player p, Board b)
@@ -19,10 +21,18 @@ public class Rook extends Piece
 
     private boolean captured = false;
 
-    public boolean moveIsValid(String spot)
+    public ArrayList<Tile> validMoveList()
     {
-        //TODO: implement
-        return true;
+        ArrayList<Tile> movelist = new ArrayList<>();
+        //up
+        movelist.addAll(getValidMoves(this, 0, 1));
+        //right
+        movelist.addAll(getValidMoves(this, 1, 0));
+        //down
+        movelist.addAll(getValidMoves(this, 0, -1));
+        //left
+        movelist.addAll(getValidMoves(this, -1, 0));
+        return movelist;
     }
 
     public void move(int x, int y)

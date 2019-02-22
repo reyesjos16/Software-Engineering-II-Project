@@ -75,4 +75,54 @@ public abstract class Piece
     // King will implement it's own "threatened" method
 
     // Special moves (since not all pieces have them) should be handled for each piece
+
+    //incx = 0, incy  =  1 for incrementing up
+    //incx = 1, incy  =  1 for up and right
+    //incx = 1, incy  =  0 for incrementing to right
+    //incx = -1, incy = -1 for incrementing to the right and down
+    //incx = 0, incy  = -1 for incrementing down
+    //incx = -1, incy = -1 for incrementing down and to the left
+    //incx = -1, incy =  0 for incrementing left
+    //incx = -1, incy =  1 for incrementing left and up
+    //format(incx,incy)     (i got tired typing incx = ... incy = ...)
+    //Bishop will use (1,1),(1,-1),(-1,-1),(-1,1)
+    //Rook will use (0,1),(1,0),(0,-1),(-1,0)
+    //Queen will use both rook's and bishop's movements
+    //
+    //x = piece x coords
+    //y = piece y coords
+    //incx, incy explained above
+    //board is the board the piece is on
+    //p is the player the piece belongs to
+    public static ArrayList<Tile> getValidMoves(int x, int y, int incx, int incy, Board board, Player p)
+    {
+        ArrayList<Tile> movelist = new ArrayList<>();
+        for(int i = 1; board.getTile(x+(incx*i), y+(incy*i)) != null; i++)
+        {
+            Tile nextmove = board.getTile(x+(incx*i), y+(incy*i));
+            if(!nextmove.isEmpty())
+            {
+                //Tile is occupied, check if enemy
+                if(!nextmove.getPiece().getPlayer().getColor().equals(p.getColor()))
+                {
+                    //Enemy piece
+                    movelist.add(nextmove);
+                }
+                //End piece hit, cannot jump pieces so end incrementing
+                break;
+            }
+            else
+            {
+                //Tile is not occupied
+                movelist.add(nextmove);
+            }
+        }
+        return movelist;
+    }
+
+    //Lazy helper function, pass piece instead of parts of piece
+    public static ArrayList<Tile> getValidMoves(Piece p, int incx, int incy)
+    {
+        return getValidMoves(p.getXcoordinate(), p.getYcoordinate(), incx, incy, p.getBoard(), p.getPlayer());
+    }
 }
