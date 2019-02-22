@@ -119,4 +119,10 @@ public abstract class Piece
         }
         return movelist;
     }
+
+    //Lazy helper function, pass piece instead of parts of piece
+    public static ArrayList<Tile> getValidMoves(Piece p, int incx, int incy)
+    {
+        return getValidMoves(p.getXcoordinate(), p.getYcoordinate(), incx, incy, p.getBoard(), p.getPlayer());
+    }
 }
