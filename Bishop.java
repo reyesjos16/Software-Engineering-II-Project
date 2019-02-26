@@ -1,5 +1,7 @@
 /* The Bishop moves diagonally on either light or dark squares */
 
+import java.util.ArrayList;
+
 public class Bishop extends Piece {
 
     Bishop(int x, int y, Player p, Board b) {
@@ -20,5 +22,19 @@ public class Bishop extends Piece {
     public boolean captured() {
         // Not sure if this is required; if it is not, it will be removed
         return false;
+    }
+
+    public ArrayList<Tile> validMoveList()
+    {
+        ArrayList<Tile> movelist = new ArrayList<>();
+        //up right
+        movelist.addAll(getValidMoves(this, 1 ,1));
+        //down right
+        movelist.addAll(getValidMoves(this, 1, -1));
+        //down left
+        movelist.addAll(getValidMoves(this, -1, -1));
+        //up left
+        movelist.addAll(getValidMoves(this, -1, 1));
+        return movelist;
     }
 }
