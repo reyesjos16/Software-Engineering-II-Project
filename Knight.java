@@ -40,6 +40,6 @@ public class Knight extends Piece {
             movement(-2,-1, moveList);
             movement(-2,1, moveList);
             movement(-1, 2, moveList);
-        return moveList;
+        return moveList
     }
 }
