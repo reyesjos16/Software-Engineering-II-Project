@@ -56,7 +56,7 @@ public class Pawn extends Piece {
             }
         }
         validMoves.addAll(this.diagonalMovement());
-        return validMoves
+        return validMoves;
     }
 
 }
