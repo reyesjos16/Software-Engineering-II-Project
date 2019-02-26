@@ -1,10 +1,23 @@
 public class Tile
 {
+    int x,y;
     private Piece holding;
 
-    Tile()
+    Tile(int xcord, int ycord)
     {
+        x = xcord;
+        y = ycord;
         holding = null;
+    }
+
+    public int getX()
+    {
+        return x;
+    }
+
+    public int getY()
+    {
+        return y;
     }
 
     public boolean isEmpty()
