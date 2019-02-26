@@ -6,6 +6,8 @@
  * Failure to do so leads to CheckMate and end of game.
  */
 
+import java.util.ArrayList;
+
 public class King extends Piece {
     // TODO: Define special behavior for King
     King(int x, int y, Player p, Board b) {
@@ -13,8 +15,6 @@ public class King extends Piece {
         this.setXcoordinate(x);
         this.setYcoordinate(y);
     }
-    
-    public void move(int x, int y) {}
     
     public void capture() {}
     
@@ -27,5 +27,51 @@ public class King extends Piece {
         
          //TODO: How is this to be implemented? Should we use an Observer pattern?
          return false;
+    }
+
+    private boolean isCheck(Tile t)
+    {
+        //TODO: returns true if given tile will put king in check
+        return false;
+    }
+
+    // ( 0, 1)
+    // ( 1, 1)
+    // ( 1, 0)
+    // ( 1,-1)
+    // ( 0,-1)
+    // (-1,-1)
+    // (-1, 0)
+    // (-1, 1)
+    private void checkMove(int x, int y, ArrayList<Tile> movelist)
+    {
+        Tile nexttile = this.getBoard().getTile(this.getXcoordinate() + x, this.getYcoordinate() + y);
+        if(nexttile != null)
+        {
+            //Tile exists
+            if(nexttile.isEmpty() || !nexttile.getPiece().getPlayer().getColor().equals(this.getPlayer().getColor()))
+            {
+                //Tile is empty or has an enemy piece on it
+                if(!this.isCheck(nexttile))
+                {
+                    //Tile will not put the king in check
+                    movelist.add(nexttile);
+                }
+            }
+        }
+    }
+
+    public ArrayList<Tile> validMoveList()
+    {
+        ArrayList<Tile> movelist = new ArrayList<>();
+        this.checkMove(0, 1, movelist);
+        this.checkMove(1, 1, movelist);
+        this.checkMove(1, 0, movelist);
+        this.checkMove(1, -1, movelist);
+        this.checkMove(0, -1, movelist);
+        this.checkMove(-1, -1, movelist);
+        this.checkMove(-1, 0, movelist);
+        this.checkMove(-1, 1, movelist);
+        return movelist;
     }
 }
