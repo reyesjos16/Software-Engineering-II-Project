@@ -27,14 +27,12 @@ public class Board
         {
             //Build column string part
             String column = "" + getCharValue(i);
-            for(int j = 1; j < rws+1; j++)
+            for(int j = 0; j < rws; j++)
             {
                 //Build row string part
-                String row = "" + j;
+                String row = "" + (j+1);
                 //Build tile
-                //TODO: How should we build the tile? default constr?
-                Tile newtile = new Tile();
-                board.put(column + row, newtile);
+                board.put(column + row, new Tile(i, j));
             }
         }
     }
