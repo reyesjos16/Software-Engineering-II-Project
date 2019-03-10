@@ -11,7 +11,7 @@ import org.graalvm.compiler.graph.Node.InjectedNodeParameter;
 public class User
 {
     @Id
-    @GeneratedValue(strategy=GeneratedType.AUTO)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
 
     private String name;
@@ -43,7 +43,7 @@ public class User
         return email;
     }
 
-    public String setEmail(String email)
+    public void setEmail(String email)
     {
         this.email = email;
     }
