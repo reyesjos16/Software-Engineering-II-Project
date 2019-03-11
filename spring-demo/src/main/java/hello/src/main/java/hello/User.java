@@ -5,7 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import org.graalvm.compiler.graph.Node.InjectedNodeParameter;
+//import org.graalvm.compiler.graph.Node.InjectedNodeParameter;
 
 @Entity //This tells Hibernate to make a table out of this class
 public class User
