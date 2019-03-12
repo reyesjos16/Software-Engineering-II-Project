@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Board
 {
@@ -34,6 +35,27 @@ public class Board
                 //Build tile
                 board.put(column + row, new Tile(i, j));
             }
+        }
+    }
+
+    private Piece getRandomPiece(int xpos, int ypos, Player p)
+    {
+        int random = ThreadLocalRandom.current().nextInt(0, 5);
+        switch(random)
+        {
+            case 0:
+                return new Pawn(xpos, ypos, p, this);
+            case 1:
+                return new Rook(xpos, ypos, p, this);
+            case 2:
+                return new Knight(xpos, ypos, p, this);
+            case 3:
+                return new Bishop(xpos, ypos, p, this);
+            case 4:
+                return new Queen(xpos, ypos, p, this);
+            default:
+                //Unless time breaks this will never be hit but it stops intellij from whining
+                return null;
         }
     }
 
