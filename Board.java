@@ -38,6 +38,57 @@ public class Board
         }
     }
 
+
+    private Piece getRandomPieceWeighted(int xpos, int ypos, Player p, int difficultyfactor)
+    {
+        //Config constants for function
+        //Random number will be 1 to RAND_BOUND-1
+        final int RAND_BOUND = 101;
+        //Random number must be <= the difficulty of the piece to become that piece
+        //This is determined by lowest order piece first (Pawn < Knight < Rook < Bishop < Queen)
+        final int PAWN_DIFFICULTY = (RAND_BOUND - 1)/5;
+        final int KNIGHT_DIFFICULTY = 2*(RAND_BOUND - 1)/5;
+        final int ROOK_DIFFICULTY = 3*(RAND_BOUND - 1)/5;
+        final int BISHOP_DIFFICULTY = 4*(RAND_BOUND - 1)/5;
+        final int QUEEN_DIFFICULTY = (RAND_BOUND - 1);
+        //"Middle ground" of Eevil chess, the further away from this number you get,
+        //the less RNG this function becomes
+        //ex: on difficultyfactor of 10 it is impossible to get any piece other than pawns, knights and rooks
+        final int NORMAL_DIFFICULTY = 5;
+
+        double difficultysensitivity = difficultyfactor/(NORMAL_DIFFICULTY + 0.0);
+
+        final int random = ThreadLocalRandom.current().nextInt(1, RAND_BOUND);
+
+        if(random <= (PAWN_DIFFICULTY*difficultysensitivity))
+        {
+            //Pawn
+            return new Pawn(xpos, ypos, p, this);
+        }
+        else if(random <= ((KNIGHT_DIFFICULTY*difficultysensitivity)))
+        {
+            //Knight
+            return new Knight(xpos, ypos, p, this);
+        }
+        else if(random <= ((ROOK_DIFFICULTY*difficultysensitivity)))
+        {
+            //Rook
+            return new Rook(xpos, ypos, p, this);
+        }
+        else if(random <= ((BISHOP_DIFFICULTY*difficultysensitivity)))
+        {
+            //Bishop
+            return new Bishop(xpos, ypos, p, this);
+        }
+        else if(random <= ((QUEEN_DIFFICULTY*difficultysensitivity)))
+        {
+            //Queen
+            return new Queen(xpos, ypos, p, this);
+        }
+        //This will never be hit unless the random number generator breaks
+        return null;
+    }
+
     private Piece getRandomPiece(int xpos, int ypos, Player p)
     {
         int random = ThreadLocalRandom.current().nextInt(0, 5);
