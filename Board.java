@@ -117,21 +117,18 @@ public class Board
         switch(num)
         {
             case 0:
+            case 7:
                 return new Rook(xpos, ypos, p, this);
             case 1:
+            case 6:
                 return new Knight(xpos, ypos, p, this);
             case 2:
+            case 5:
                 return new Bishop(xpos, ypos, p, this);
             case 3:
                 return new King(xpos, ypos, p, this);
             case 4:
                 return new Queen(xpos, ypos, p, this);
-            case 5:
-                return new Bishop(xpos, ypos, p, this);
-            case 6:
-                return new Knight(xpos, ypos, p, this);
-            case 7:
-                return new Rook(xpos, ypos, p, this);
             default:
                 return null;
         }
