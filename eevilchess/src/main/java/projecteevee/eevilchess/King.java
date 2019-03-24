@@ -5,6 +5,7 @@
  * The player must then move the King out of check.
  * Failure to do so leads to CheckMate and end of game.
  */
+package projecteevee.eevilchess;
 
 import java.util.ArrayList;
 

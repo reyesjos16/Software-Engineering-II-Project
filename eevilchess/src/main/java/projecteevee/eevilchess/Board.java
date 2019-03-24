@@ -1,3 +1,5 @@
+package projecteevee.eevilchess;
+
 import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
 

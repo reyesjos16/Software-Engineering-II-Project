@@ -1,3 +1,5 @@
+package projecteevee.eevilchess;
+
 public class Player
 {
     private boolean iswhite;
