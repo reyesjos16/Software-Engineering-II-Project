@@ -1,3 +1,5 @@
+package projecteevee.eevilchess;
+
 public class Tile
 {
     int x,y;

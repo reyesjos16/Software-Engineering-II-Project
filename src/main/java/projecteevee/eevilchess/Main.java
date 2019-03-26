@@ -1,3 +1,5 @@
+package projecteevee.eevilchess;
+
 /*
  *	Main handles running the Eevil Chess
  *	Authors: Team Eevee
