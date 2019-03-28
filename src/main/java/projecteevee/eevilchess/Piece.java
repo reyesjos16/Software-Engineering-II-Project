@@ -1,3 +1,5 @@
+package projecteevee.eevilchess;
+
 /*
 *   Piece is an abstract class that provides each game piece with
 *   common functions.
