@@ -18,7 +18,9 @@ public class Main
 
         // Game is being played
         while(!checkmate) {
-
+            Board newboard = new Board(8, 8);
+            newboard.populateTableNormal(new Player("white"), new Player("black"));
+            System.out.println(newboard.getBoardJSON().toString(4));
             // Temporary check for testing. Enter 1 to break the loop.
             System.out.println("Continue?\n");
             int check = keyboard.nextInt();
