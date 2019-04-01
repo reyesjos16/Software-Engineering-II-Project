@@ -266,9 +266,11 @@ public class Board
             tilejson.put("x", board.get(tilename).getX());
             tilejson.put("y", board.get(tilename).getY());
 
+            String piecetype = "none";
             //Check if tile is empty
             if(!board.get(tilename).isEmpty())
             {
+                piecetype = board.get(tilename).getPiece().getName();
                 //Tile has a piece so add the name and its movelist
                 for(Tile validmove : board.get(tilename).getPiece().validMoveList())
                 {
@@ -277,8 +279,9 @@ public class Board
                     validmovejson.put("y", validmove.getY());
                     movelistjson.put(validmovejson);
                 }
-                piecejson.put(board.get(tilename).getPiece().getName(), movelistjson);
             }
+            piecejson.put("type", piecetype);
+            piecejson.put("movelist", movelistjson);
             tilejson.put("piece", piecejson);
             boardjson.put(tilejson);
             i.remove();
