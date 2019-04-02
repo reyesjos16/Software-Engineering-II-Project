@@ -284,7 +284,6 @@ public class Board
             piecejson.put("movelist", movelistjson);
             tilejson.put("piece", piecejson);
             boardjson.put(tilejson);
-            i.remove();
         }
         fullboard.put("tiles", boardjson);
         return fullboard;
