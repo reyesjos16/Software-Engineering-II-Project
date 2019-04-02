@@ -2,9 +2,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
     <head>
         <title>Start a Game of Eevil Chess</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     </head>
     <body>
         <h1>Start a Game of Eevil Chess</h1>
 
+        <form action="#" th:action="@{/startgame}" th:object="${new_game}" method="post">
+            <p>GameID: <input type="text" th:field="*{game_id}" /></p>
+            <p>Player1 ID: <input type="text" th:field="*{player1_id}" /></p>
+            <p>Player2 ID: <input type="text" th:field="*{player2_id}" /></p>
+            <p>Turn Duration: <input type="text" th:field="*{turn_duration}" /></p>
+            <p>Board Dimensions: <input type="text" th:field="*{board_dimensions}" /></p>
+            <p>Randomize Pieces?: <input type="text" th:field="*{randomize_pieces}" /></p>
+            
+            <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+        </form>
     </body>
 </html>
