@@ -1,6 +1,6 @@
 package projecteevee.eevilchess;
 
-public class EevilClock
+public class EevilClock extends Thread
 {
     //TODO: How will the timer contact the player client?
     boolean paused = true;
