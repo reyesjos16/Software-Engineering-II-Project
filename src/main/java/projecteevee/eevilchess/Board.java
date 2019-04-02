@@ -1,7 +1,12 @@
 package projecteevee.eevilchess;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
+
 
 public class Board
 {
@@ -240,5 +245,47 @@ public class Board
     public String getPieceImage(int x, int y)
     {
         return getPieceImage(("" + getCharValue(x)) + (y + 1));
+    }
+
+    public JSONObject getBoardJSON()
+    {
+        JSONObject fullboard = new JSONObject();
+        JSONArray boardjson = new JSONArray();
+        Iterator i = this.board.entrySet().iterator();
+        while(i.hasNext())
+        {
+            JSONObject tilejson = new JSONObject();
+            JSONObject piecejson = new JSONObject();
+            JSONArray movelistjson = new JSONArray();
+
+            Map.Entry tilekey = (Map.Entry)i.next();
+            String tilename = (String)tilekey.getKey();
+
+            //Location of the tile
+            tilejson.put("tilename", tilename);
+            tilejson.put("x", board.get(tilename).getX());
+            tilejson.put("y", board.get(tilename).getY());
+
+            String piecetype = "none";
+            //Check if tile is empty
+            if(!board.get(tilename).isEmpty())
+            {
+                piecetype = board.get(tilename).getPiece().getName();
+                //Tile has a piece so add the name and its movelist
+                for(Tile validmove : board.get(tilename).getPiece().validMoveList())
+                {
+                    JSONObject validmovejson = new JSONObject();
+                    validmovejson.put("x", validmove.getX());
+                    validmovejson.put("y", validmove.getY());
+                    movelistjson.put(validmovejson);
+                }
+            }
+            piecejson.put("type", piecetype);
+            piecejson.put("movelist", movelistjson);
+            tilejson.put("piece", piecejson);
+            boardjson.put(tilejson);
+        }
+        fullboard.put("tiles", boardjson);
+        return fullboard;
     }
 }
