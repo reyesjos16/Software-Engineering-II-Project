@@ -27,7 +27,7 @@ public class EevilClock extends Thread
         //TODO: Send client new time?
     }
 
-    public void start()
+    public void unpause()
     {
         paused = false;
     }
