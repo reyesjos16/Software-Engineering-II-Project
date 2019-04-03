@@ -3,12 +3,33 @@ package projecteevee.eevilchess;
 public class EevilClock extends Thread
 {
     //TODO: How will the timer contact the player client?
-    boolean paused = true;
-    int time;
+    //Thread starts paused
+    private boolean paused = true;
+    private int tickrate;
+    private int time;
+
+    //Customize time, 1s tickrate
+    EevilClock(int ticks)
+    {
+        time = ticks;
+        tickrate = 1000;
+    }
+
+    //Customize time and tickrate
+    EevilClock(int ticks, int tickr)
+    {
+        time = ticks;
+        tickrate = tickr;
+    }
 
     public boolean isPaused()
     {
         return paused;
+    }
+
+    public void setTime(int t)
+    {
+        time = t;
     }
 
     public int getTime()
@@ -16,12 +37,24 @@ public class EevilClock extends Thread
         return time;
     }
 
+    //Add time
+    public void addTime(int t)
+    {
+        time = time + t;
+    }
+
+    //Remove time
+    public void rmTime(int t)
+    {
+        time = time - t;
+    }
+
     public void die()
     {
         time = 0;
     }
 
-    private void second()
+    private void tick()
     {
         time--;
         //TODO: Send client new time?
@@ -37,22 +70,16 @@ public class EevilClock extends Thread
         paused = true;
     }
 
-    public void run(int secs)
+    public void run()
     {
-        time = secs;
-        while(true)
+        while(time > 0)
         {
             if(!paused)
             {
                 try
                 {
-                    Thread.sleep(1000);
-                    second();
-                    if(time <= 0)
-                    {
-                        //TODO: what should the timer do when it runs out of time?
-                        break;
-                    }
+                    Thread.sleep(tickrate);
+                    tick();
                 }
                 catch(Exception e)
                 {
@@ -61,5 +88,6 @@ public class EevilClock extends Thread
                 }
             }
         }
+        //TODO: what should the timer do when it runs out of time?
     }
 }
