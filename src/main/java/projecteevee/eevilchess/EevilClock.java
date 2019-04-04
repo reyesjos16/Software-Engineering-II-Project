@@ -1,7 +1,11 @@
 package projecteevee.eevilchess;
 
+//join() must be called before the main thread exits to clean up
 public class EevilClock extends Thread
 {
+    //Mutex lock
+    static private boolean lock = false;
+
     //TODO: How will the timer contact the player client?
     //Thread starts paused
     private boolean paused = true;
@@ -11,6 +15,7 @@ public class EevilClock extends Thread
     //Customize time, 1s tickrate
     EevilClock(int ticks)
     {
+        super();
         time = ticks;
         tickrate = 1000;
     }
@@ -18,6 +23,7 @@ public class EevilClock extends Thread
     //Customize time and tickrate
     EevilClock(int ticks, int tickr)
     {
+        super();
         time = ticks;
         tickrate = tickr;
     }
@@ -49,14 +55,19 @@ public class EevilClock extends Thread
         time = time - t;
     }
 
-    public void die()
-    {
-        time = 0;
-    }
-
     private void tick()
     {
-        time--;
+        while(true)
+        {
+            if(!lock)
+            {
+                lock = true;
+                time--;
+                System.out.println(time);
+                lock = false;
+                break;
+            }
+        }
         //TODO: Send client new time?
     }
 
@@ -70,6 +81,7 @@ public class EevilClock extends Thread
         paused = true;
     }
 
+    @Override
     public void run()
     {
         while(time > 0)
@@ -84,7 +96,7 @@ public class EevilClock extends Thread
                 catch(Exception e)
                 {
                     e.printStackTrace();
-                    this.die();
+                    time = -1;
                 }
             }
         }
