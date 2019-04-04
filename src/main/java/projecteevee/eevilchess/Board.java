@@ -13,6 +13,8 @@ public class Board
     private static final int MAX_COLS = 26;
     private HashMap<String, Tile> board = null;
     private int columns = 0, rows = 0;
+    private final int WHITE_DIFFICULTY = ThreadLocalRandom.current().nextInt(1, 11);
+    private final int BLACK_DIFFICULTY = ThreadLocalRandom.current().nextInt(1, 11);
 
     Board(int cols, int rows)
     {
@@ -179,6 +181,28 @@ public class Board
         }
     }
 
+    public void populateTableEevil(Player white, Player black)
+    {
+        int startcolW = (columns/2) - 4; //0 on an 8x? board
+        int startcolB = (columns/2) + 3; //7 on an 8x? board
+        //Place pieces
+        for(int i = 0; i < 8; i++)
+        {
+            if(i != 3)
+            {
+                this.placeOnTile(startcolW + i, 0, getRandomPieceWeighted(startcolW + i, 0, white, WHITE_DIFFICULTY));
+                this.placeOnTile(startcolB - i, rows - 1, getRandomPieceWeighted(startcolW - i, rows - 1, black, BLACK_DIFFICULTY));
+            }
+            else
+            {
+                this.placeOnTile(startcolW + i, 0, new King(startcolW + i, 0, white, this));
+                this.placeOnTile(startcolB - i, rows - 1, new King(startcolB - i, rows - 1, black, this));
+            }
+            this.placeOnTile(startcolW + i, 1, getRandomPieceWeighted(startcolW + i, 1, white, WHITE_DIFFICULTY));
+            this.placeOnTile(startcolB - i, rows - 2, getRandomPieceWeighted(startcolW - i, rows - 2, black, BLACK_DIFFICULTY));
+        }
+    }
+
     //ACII value of lowercase letters
     //0  = a
     //1  = b
@@ -267,24 +291,30 @@ public class Board
             tilejson.put("y", board.get(tilename).getY());
 
             String piecetype = "none";
+            String player = "none";
             //Check if tile is empty
             if(!board.get(tilename).isEmpty())
             {
                 piecetype = board.get(tilename).getPiece().getName();
+                player = board.get(tilename).getPiece().getPlayer().getColor();
                 //Tile has a piece so add the name and its movelist
                 for(Tile validmove : board.get(tilename).getPiece().validMoveList())
                 {
                     JSONObject validmovejson = new JSONObject();
                     validmovejson.put("x", validmove.getX());
                     validmovejson.put("y", validmove.getY());
+                    validmovejson.put("tilename", getCharValue(validmove.getX()) + "" + (validmove.getY() + 1));
                     movelistjson.put(validmovejson);
                 }
             }
             piecejson.put("type", piecetype);
+            piecejson.put("player", player);
             piecejson.put("movelist", movelistjson);
             tilejson.put("piece", piecejson);
             boardjson.put(tilejson);
         }
+        fullboard.put("white_difficulty", WHITE_DIFFICULTY);
+        fullboard.put("black_difficulty", BLACK_DIFFICULTY);
         fullboard.put("tiles", boardjson);
         return fullboard;
     }
