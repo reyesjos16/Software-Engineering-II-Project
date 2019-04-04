@@ -1,12 +1,46 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+lang="en">
     <head>
+
         <title>Start a Game of Eevil Chess</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <style>
+            </style>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" 
+        name="viewport" content="width=device-width, initial-scale=1"/>
+        <!-- Imports -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+        <link rel="stylesheet" href="./main.css">
     </head>
     <body>
+            <div class="container">
+                    <!-- Header -->
+                    <div class="row" id="head">
+                      <table>
+                        <tr>
+                          <td id="logo"> <img src="./img/tophat-eevee.gif" /> </td>
+                          <td id="title"><h1> Eevil Chess </h1></td>
+                        </tr>
+                      </table>
+                    </div>
+        <!-- Navigation bar -->
+      <nav class="row navbar navbar-expand-lg navbar-light">
+            <div class="navbar-nav">
+              <ul>
+                <li><a class="nav-item nav-link" href="./index.html"> Home </a></li>
+                <li><a class="nav-item nav-link" href="./create-account.html"> Create Account </a></li>
+                <li><a class="nav-item nav-link" href="./login.html">Login</a></li>
+                <li><a class="nav-item nav-link" href="./profile.html">Profile</a></li>
+                <li><a class="nav-item nav-link active" href="./start-game.html">Start Game</a></li>
+              </ul>
+              <br style="clear:both;" />
+            </div>
+          </nav>
+          <div class="row" id="content">
         <h1>Start a Game of Eevil Chess</h1>
-
         <form action="#" th:action="@{/startgame}" th:object="${new_game}" method="post">
             <p>GameID: <input type="text" th:field="*{game_id}" /></p>
             <p>Player1 ID: <input type="text" th:field="*{player1_id}" /></p>
@@ -17,5 +51,11 @@
             
             <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
         </form>
+          </div>
+            <!-- Footer -->
+      <div class="row" id="footer">
+            &copy Team Eevee <br />
+            <i>Made for CSCI-4230: Software Engineering II </i>
+          </div>
     </body>
 </html>
