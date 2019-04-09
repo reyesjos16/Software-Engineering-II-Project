@@ -117,17 +117,21 @@ public class Game extends Thread
                     if(player1_clock.done())
                     {
                         winner = player2_id;
+                        gameover = true;
                     }
                 }
             }
 
             if(timed)
             {
+                //end Player1 turn
                 player1_clock.pause();
                 //Player2 turn
                 player2_clock.unpause();
             }
-            if(!winner.equals(""))
+
+            //Skip Player2 turn if game is already over
+            if(!gameover)
             {
                 while(!player1turn)
                 {
@@ -138,6 +142,7 @@ public class Game extends Thread
                         if(player2_clock.done())
                         {
                             winner = player1_id;
+                            gameover = true;
                         }
                     }
                 }
@@ -145,11 +150,14 @@ public class Game extends Thread
 
             if(timed)
             {
+                //end Player2 turn
                 player2_clock.pause();
             }
-
+            //Check for gameover after Player2 turn
             gameover = !winner.equals("");
         }
+
+        //Clean up timer threads if they exist
         if(timed)
         {
             try
