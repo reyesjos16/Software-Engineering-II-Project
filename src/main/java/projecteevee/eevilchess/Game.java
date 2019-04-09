@@ -1,13 +1,34 @@
 package projecteevee.eevilchess;
 
-public class Game
+public class Game extends Thread
 {
+    private int starttime;
+    private boolean timed, tournytime;
+    private EevilClock player1_clock, player2_clock;
     private String game_id;
     private String player1_id;
     private String player2_id;
     private String turn_duration;
     private String board_dimensions;
     private Boolean randomize_pieces;
+
+    Game()
+    {
+        super();
+        timed = false;
+    }
+
+    Game(boolean singletime, int start)
+    {
+        super();
+        tournytime = singletime;
+        timed = true;
+        player1_clock = new EevilClock(start);
+        player2_clock = new EevilClock(start);
+        starttime = start;
+        player1_clock.start();
+        player2_clock.start();
+    }
 
     public String getGameID()
     {
@@ -67,6 +88,80 @@ public class Game
     public void setRandomizedGame(Boolean random_game)
     {
         this.randomize_pieces = random_game;
+    }
+
+    @Override
+    public void run()
+    {
+        boolean gameover = false, player1turn = true;
+        String winner = "";
+        //TODO: Pass both players the board here
+        while(!gameover)
+        {
+            if(timed && !tournytime)
+            {
+                player1_clock.setTime(starttime);
+                player2_clock.setTime(starttime);
+            }
+            //Player1 turn
+            if(timed)
+            {
+                player1_clock.unpause();
+            }
+            while(player1turn)
+            {
+                //TODO: Get response/move (might require another thread so this continues checking the timer)
+
+                if(timed)
+                {
+                    if(player1_clock.done())
+                    {
+                        winner = player2_id;
+                    }
+                }
+            }
+
+            if(timed)
+            {
+                player1_clock.pause();
+                //Player2 turn
+                player2_clock.unpause();
+            }
+            if(!winner.equals(""))
+            {
+                while(!player1turn)
+                {
+                    //TODO: Get response/move (might require another thread so this continues checking the timer)
+
+                    if(timed)
+                    {
+                        if(player2_clock.done())
+                        {
+                            winner = player1_id;
+                        }
+                    }
+                }
+            }
+
+            if(timed)
+            {
+                player2_clock.pause();
+            }
+
+            gameover = !winner.equals("");
+        }
+        if(timed)
+        {
+            try
+            {
+                player1_clock.join();
+                player2_clock.join();
+            }
+            catch(Exception ex)
+            {
+                ex.printStackTrace();
+            }
+        }
     }
 }
 
