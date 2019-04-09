@@ -43,6 +43,11 @@ public class EevilClock extends Thread
         return time;
     }
 
+    public boolean done()
+    {
+        return time <= 0;
+    }
+
     //Add time
     public void addTime(int t)
     {
