@@ -19,6 +19,7 @@ public abstract class Piece
     protected Player player;    // Player this piece belongs to (black, white?)
     protected String imagePath; // Path to piece image, for GUI purposes
     protected Board board;      // Current chess board
+    protected ArrayList<Tile> movelist; //movelist
 
     // Constructor
     public Piece(String pieceName, Player player, Board board) {
@@ -29,6 +30,7 @@ public abstract class Piece
         this.ycoordinate = -1;   // TODO: Discuss what should be used for null value?
         this.board = board;
         this.imagePath = "./pieces/" + player.getColor() + "_" + pieceName + ".png";
+        this.movelist = new ArrayList<>();
     }
 
     // Abstract functions each piece must have
@@ -38,6 +40,11 @@ public abstract class Piece
     // commented out below:
     
     public abstract ArrayList<Tile> validMoveList();
+
+    public void updateMoves()
+    {
+        movelist = validMoveList();
+    }
 
     // TODO: Decide if capture() and captured() are still necessary
 
@@ -60,6 +67,11 @@ public abstract class Piece
     public String getImagePath() { return this.imagePath; }
 
     public Board getBoard() { return this.board; }
+
+    public ArrayList<Tile> getMovelist()
+    {
+        return movelist;
+    }
 
     /* Setters */
 
