@@ -256,6 +256,16 @@ public class Board
         this.placeOnTile(("" + getCharValue(x)) + (y + 1), chesspiece);
     }
 
+    public void removeTile(String tile)
+    {
+        this.board.remove(tile);
+    }
+
+    public void removeTile(int x, int y)
+    {
+        removeTile(getCharValue(x) + "" + (y + 1));
+    }
+
     public String getPieceImage(String pos)
     {
         Piece x = board.get(pos).getPiece();
@@ -269,6 +279,71 @@ public class Board
     public String getPieceImage(int x, int y)
     {
         return getPieceImage(("" + getCharValue(x)) + (y + 1));
+    }
+    //Updates every piece's movelist
+    public void reCheckMoves()
+    {
+        //Re-update pieces movelists
+        Iterator i = this.board.entrySet().iterator();
+        while(i.hasNext())
+        {
+            Map.Entry tile = (Map.Entry)i.next();
+            String key = (String)tile.getKey();
+            Tile temp = board.get(key);
+            //Check if tile has a piece on it
+            if(temp.getPiece() != null)
+            {
+                temp.getPiece().updateMoves();
+            }
+        }
+    }
+
+    //Thanos doesn't care if the game becomes unwinnable after snapping the board
+    //👊👌
+    public void thanosSnap()
+    {
+
+        int target = board.size()/2;
+        int tilessnapped = 0;
+        Iterator i = this.board.entrySet().iterator();
+        //Snap will continue until half of the board is gone
+        while(tilessnapped < target)
+        {
+            //Restart the iterator if it has reached the end and we haven't achieved 50% snapped
+            if(!i.hasNext())
+            {
+                i = this.board.entrySet().iterator();
+            }
+            //Critical failures get snapped
+            //This makes absolutely sure selection is not biased
+            if(ThreadLocalRandom.current().nextInt(1, 21) == 1)
+            {
+                Map.Entry tile = (Map.Entry)i.next();
+                String key = (String)tile.getKey();
+                Tile temp = board.get(key);
+                //Empty tiles can be snapped without any checks
+                if(temp.getPiece() != null)
+                {
+                    //Unfortunately we cannot snap kings
+                    if(!temp.getPiece().getName().equals("king"))
+                    {
+                        //I don't feel so good
+                        tilessnapped++;
+                        i.remove();
+                        i.next();
+                    }
+                }
+                else
+                {
+                    //I don't feel so good
+                    tilessnapped++;
+                    i.remove();
+                    i.next();
+                }
+            }
+        }
+        reCheckMoves();
+        System.out.println(tilessnapped + " tiles snapped.");
     }
 
     public JSONObject getBoardJSON()
@@ -298,7 +373,7 @@ public class Board
                 piecetype = board.get(tilename).getPiece().getName();
                 player = board.get(tilename).getPiece().getPlayer().getColor();
                 //Tile has a piece so add the name and its movelist
-                for(Tile validmove : board.get(tilename).getPiece().validMoveList())
+                for(Tile validmove : board.get(tilename).getPiece().getMovelist())
                 {
                     JSONObject validmovejson = new JSONObject();
                     validmovejson.put("x", validmove.getX());
