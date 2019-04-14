@@ -36,3 +36,4 @@ public class MainController
     {
         return gameRepository.findAll();
     }
+}
