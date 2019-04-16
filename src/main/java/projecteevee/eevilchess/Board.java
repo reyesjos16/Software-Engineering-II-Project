@@ -314,14 +314,13 @@ public class Board
             {
                 i = this.board.entrySet().iterator();
             }
-            //Critical failures get snapped
-            //This makes absolutely sure selection is not biased
-            if(ThreadLocalRandom.current().nextInt(1, 21) == 1)
+            //This makes absolutely sure snap selection is not biased
+            if(ThreadLocalRandom.current().nextInt(1, 3) == 1)
             {
                 Map.Entry tile = (Map.Entry)i.next();
                 String key = (String)tile.getKey();
                 Tile temp = board.get(key);
-                //Empty tiles can be snapped without any checks
+                //Empty tiles can be snapped without any further checks
                 if(temp.getPiece() != null)
                 {
                     //Unfortunately we cannot snap kings
