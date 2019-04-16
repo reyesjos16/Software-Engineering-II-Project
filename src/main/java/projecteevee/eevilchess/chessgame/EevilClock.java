@@ -1,4 +1,4 @@
-package projecteevee.eevilchess;
+package projecteevee.eevilchess.chessgame;
 
 //join() must be called before the main thread exits to clean up
 public class EevilClock extends Thread

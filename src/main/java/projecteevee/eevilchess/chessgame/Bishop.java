@@ -1,5 +1,5 @@
 /* The Bishop moves diagonally on either light or dark squares */
-package projecteevee.eevilchess;
+package projecteevee.eevilchess.chessgame;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package projecteevee.eevilchess;
+package projecteevee.eevilchess.chessgame;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;

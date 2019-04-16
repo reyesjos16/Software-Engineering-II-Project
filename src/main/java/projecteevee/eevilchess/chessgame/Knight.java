@@ -1,4 +1,4 @@
-package projecteevee.eevilchess;
+package projecteevee.eevilchess.chessgame;
 
 import java.util.ArrayList;
 public class Knight extends Piece {

@@ -1,4 +1,4 @@
-package projecteevee.eevilchess;
+package projecteevee.eevilchess.chessgame;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

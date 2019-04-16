@@ -7,7 +7,7 @@
  *         X
  *         X
  */
-package projecteevee.eevilchess;
+package projecteevee.eevilchess.chessgame;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package projecteevee.eevilchess;
+package projecteevee.eevilchess.chessgame;
 
 /*
  *	Main handles running the Eevil Chess
@@ -7,6 +7,7 @@ package projecteevee.eevilchess;
  * */
 
 import java.util.*;
+import projecteevee.eevilchess.chessgame.Board;
 
 public class Main
 {
