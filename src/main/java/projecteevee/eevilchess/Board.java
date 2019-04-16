@@ -329,7 +329,6 @@ public class Board
                         //I don't feel so good
                         tilessnapped++;
                         i.remove();
-                        i.next();
                     }
                 }
                 else
@@ -337,7 +336,6 @@ public class Board
                     //I don't feel so good
                     tilessnapped++;
                     i.remove();
-                    i.next();
                 }
             }
         }
