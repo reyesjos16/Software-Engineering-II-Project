@@ -37,6 +37,14 @@ public class MainController
         return gameRepository.findAll();
     }
 
+    @GetMapping(path="/games/{gameID}")
+    public Game displayGame(@PathVariable String id)
+    {
+        String gameID = id;
+        return gameRepository.getOne(gameID);
+    }
+
+    // The following URL endpoints will return HTML pages
     @GetMapping(path="/")
     public String displayHomepage()
     {
@@ -49,7 +57,7 @@ public class MainController
         return "profile";
     }
 
-    @GetMapping(path="/home")
+    @GetMapping(path="/profile")
     public String startGame()
     {
         return "startgame";
