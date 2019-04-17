@@ -36,4 +36,22 @@ public class MainController
     {
         return gameRepository.findAll();
     }
+
+    @GetMapping(path="/")
+    public String displayHomepage()
+    {
+        return "homepage";
+    }
+
+    @GetMapping(path="/home")
+    public String displayProfile()
+    {
+        return "profile";
+    }
+
+    @GetMapping(path="/home")
+    public String startGame()
+    {
+        return "startgame";
+    }
 }
