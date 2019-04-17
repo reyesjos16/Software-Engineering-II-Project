@@ -6,8 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import projecteevee.eevilchess.Game;
 
 //public interface GameRepository extends CrudRepository<Game, Integer>
-public interface GameRepository extends JpaRepository<Game, Integer>
-
+public interface GameRepository extends JpaRepository<Game, String>
 {
-    
+    Game findByGameID(Integer gameID);
 }

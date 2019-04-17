@@ -37,6 +37,7 @@ public class MainController
         return gameRepository.findAll();
     }
 
+    // Retrieves a single game by GameID
     @GetMapping(path="/games/{gameID}")
     public Game displayGame(@PathVariable String id)
     {
