@@ -8,6 +8,8 @@
 package projecteevee.eevilchess.chessgame;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
 
 public class King extends Piece {
     // TODO: Define special behavior for King
@@ -22,12 +24,25 @@ public class King extends Piece {
     public boolean captured() {return false;}
     
     public Boolean isThreatened() {
-        /* isThreatened() returns true if the King is in check,
-         * and false otherwise.
-         */
-        
-         //TODO: How is this to be implemented? Should we use an Observer pattern?
-         return false;
+        Iterator i = this.board.getBoard().entrySet().iterator();
+        while(i.hasNext())
+        {
+            Tile tile = (Tile)(((Map.Entry)i.next()).getValue());
+            if(!tile.isEmpty())
+                //Has piece?
+                if(!tile.getPiece().getPlayer().getColor().equals(this.getPlayer().getColor()))
+                    //Is Enemy?
+                    if(tile.getPiece().movelist.contains(this.board.getTile(this.getXcoordinate(), this.getYcoordinate())))
+                        //Check
+                        return true;
+
+        }
+        return false;
+    }
+
+    public boolean checkmate()
+    {
+        return this.isThreatened() && this.movelist.isEmpty();
     }
 
     private boolean isCheck(Tile t)
