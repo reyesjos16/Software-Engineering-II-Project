@@ -11,6 +11,7 @@ public class EevilClock extends Thread
     private boolean paused = true;
     private int tickrate;
     private int time;
+    private boolean thread_alive = true;
 
     //Customize time, 1s tickrate
     EevilClock(int ticks)
@@ -50,7 +51,17 @@ public class EevilClock extends Thread
 
     public void end()
     {
-        time = 0;
+        while(true)
+        {
+            if(!lock)
+            {
+                lock = true;
+                thread_alive = false;
+                time = 0;
+                lock = false;
+                break;
+            }
+        }
     }
 
     //Add time
@@ -72,8 +83,11 @@ public class EevilClock extends Thread
             if(!lock)
             {
                 lock = true;
-                time--;
-                System.out.println(time);
+                if(thread_alive)
+                {
+                    time--;
+                    System.out.println(time);
+                }
                 lock = false;
                 break;
             }
