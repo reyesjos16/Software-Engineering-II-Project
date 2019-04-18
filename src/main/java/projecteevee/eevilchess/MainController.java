@@ -1,5 +1,7 @@
 package projecteevee.eevilchess;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,15 +21,20 @@ public class MainController
     @Autowired
     private GameRepository gameRepository;
 
+    
     // Retrieves a single game by GameID
     @GetMapping(path="/games/{gameID}")
-    public Game displayGame(@PathVariable String id)
+    public List<Game> displayGame(@PathVariable String id)
     {
         String gameID = id;
-        return gameRepository.getOne(gameID);
+        //return gameRepository.getOne(gameID);
+        return gameRepository.findByGameID(gameID);
+        
     }
 
-    @PostMapping(path="/newgame")
+    
+
+	@PostMapping(path="/newgame")
     public @ResponseBody String createNewGame (@RequestParam String gameID, @RequestParam String player1, @RequestParam String player2)
     {
         Game new_game = new Game();
