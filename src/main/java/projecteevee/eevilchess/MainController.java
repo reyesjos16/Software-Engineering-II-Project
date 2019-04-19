@@ -21,19 +21,6 @@ public class MainController
     @Autowired
     private GameRepository gameRepository;
 
-    
-    // Retrieves a single game by GameID
-    @GetMapping(path="/games/{gameID}")
-    public List<Game> displayGame(@PathVariable String id)
-    {
-        String gameID = id;
-        //return gameRepository.getOne(gameID);
-        return gameRepository.findByGameID(gameID);
-        
-    }
-
-    
-
 	@PostMapping(path="/newgame")
     public @ResponseBody String createNewGame (@RequestParam String gameID, @RequestParam String player1, @RequestParam String player2)
     {
@@ -53,20 +40,27 @@ public class MainController
         return gameRepository.findAll();
     }
 
+    @GetMapping(path="games/{gameID}")
+    public @ResponseBody Integer displayGame(@RequestParam(value="gameID") Integer gameID)
+    {
+        Integer id = gameID;
+        return id;
+    }
+    
     // The following URL endpoints will return HTML pages
     @GetMapping(path="/")
-    public String displayHomepage()
+    public @ResponseBody String displayHomepage()
     {
         return "homepage";
     }
 
-    @GetMapping(path="/home")
-    public String displayProfile()
+    @GetMapping(path="/profile")
+    public @ResponseBody String displayProfile()
     {
         return "profile";
     }
 
-    @GetMapping(path="/profile")
+    @GetMapping(path="/startgame")
     public String startGame()
     {
         return "startgame";
