@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -55,6 +56,24 @@ public class MainController {
         //return status.toString();
         return game.toString();
     }
+
+    @GetMapping(path = "games/{gameID}/{playerID}/movelist")
+    public @ResponseBody String displayMoveList(@PathVariable String gameID, @PathVariable String playerID)
+    {
+        Integer id = Integer.parseInt(gameID);
+        String pID = playerID;
+        return gameID + " " + playerID + "\n";
+    }
+
+    @PostMapping(path = "games/{gameID}/{playerID}/movelist")
+    public @ResponseBody String updateMoveList(@PathVariable String gameID, @PathVariable String playerID, @RequestParam String piece, @RequestParam String current_tile, @RequestParam String new_tile)
+    {
+        return gameID + " " + playerID + " " + piece + " " + current_tile + " " + new_tile + "\n";
+    }
+
+
+
+
 
     // The following URL endpoints will return HTML pages
     @GetMapping(path="/")
