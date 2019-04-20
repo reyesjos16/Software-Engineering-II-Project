@@ -56,4 +56,13 @@ public class Game
     {
         this.player2 = p;
     }
+
+    @Override
+    public String toString()
+    {
+        return String.format(
+        "[Game[GameID='%s', Player1='%s', Player2='%s']",
+        gameID, player1, player2
+        );
+    }
 }
