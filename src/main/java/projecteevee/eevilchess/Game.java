@@ -17,6 +17,17 @@ public class Game
     private String player1;
     private String player2;
 
+    private Integer p1_eevil_num;
+    private Integer p2_eevil_num;
+
+    private String p1_piece_list;
+    private String p2_piece_list;
+
+    private Integer board_dimensions;
+
+    private String p1_move_list;
+    private String p2_move_list;
+
     public Integer getID()
     {
         return id;
@@ -55,6 +66,64 @@ public class Game
     public void setPlayer2(String p)
     {
         this.player2 = p;
+    }
+
+    public Integer getBoardDimensions()
+    {
+        return board_dimensions;
+    }
+
+    public void setBoardDimensions(Integer dimensions)
+    {
+        this.board_dimensions = dimensions;
+    }
+
+    public Integer getEevilNumber(Integer playerNumber)
+    {
+        if(playerNumber == 1)
+        {
+            return p1_eevil_num;
+        }
+        else
+        {
+            return p2_eevil_num;
+        }
+    }
+
+    public void setEevilNumber(Integer playerNumber, Integer eevilNum)
+    {
+        if(playerNumber == 1)
+        {
+            this.p1_eevil_num = eevilNum;
+        }
+        else
+        {
+            this.p2_eevil_num = eevilNum;
+        }
+    }
+
+    public void initializePieceList(Integer playerNumber, String pieceList)
+    {
+        if(playerNumber == 1)
+        {
+            this.p1_piece_list = pieceList;
+        }
+        else
+        {
+            this.p2_piece_list = pieceList;
+        }
+    }
+
+    public String showStartingPieces(Integer playerNumber, String pieceList)
+    {
+        if(playerNumber == 1)
+        {
+            return this.p1_piece_list;
+        }
+        else
+        {
+            return this.p2_piece_list;
+        }
     }
 
     @Override
