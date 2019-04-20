@@ -1,6 +1,7 @@
 package projecteevee.eevilchess;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,15 +16,14 @@ import projecteevee.eevilchess.Game;
 import projecteevee.eevilchess.GameRepository;
 
 @Controller
-@RequestMapping(path="/eevee")
-public class MainController
-{
+@RequestMapping(path = "/eevee")
+public class MainController {
     @Autowired
     private GameRepository gameRepository;
 
-	@PostMapping(path="/newgame")
-    public @ResponseBody String createNewGame (@RequestParam String gameID, @RequestParam String player1, @RequestParam String player2)
-    {
+    @PostMapping(path = "/newgame")
+    public @ResponseBody String createNewGame(@RequestParam String gameID, @RequestParam String player1,
+            @RequestParam String player2) {
         Game new_game = new Game();
         new_game.setGameID(gameID);
         new_game.setPlayer1(player1);
@@ -34,25 +34,28 @@ public class MainController
         return "New Game Created";
     }
 
-    @GetMapping(path="/games")
-    public @ResponseBody Iterable<Game> listGames()
-    {
+    @GetMapping(path = "/games")
+    public @ResponseBody Iterable<Game> listGames() {
         return gameRepository.findAll();
     }
 
     // @GetMapping(path="game/{gameID}")
     // public @ResponseBody Integer displayGame(@RequestParam Integer gameID)
     // {
-    //     Integer id = gameID;
-    //     return id;
+    // Integer id = gameID;
+    // return id;
     // }
-    
-    @GetMapping(path="games/{gameID}")
-    public @ResponseBody String displayGame(@PathVariable String gameID)
-    {
-        //Integer id = 1;
-        String id = gameID;
-        return id;
+
+    @GetMapping(path = "games/{gameID}")
+    public @ResponseBody String displayGame(@PathVariable String gameID) {
+        // Integer id = 1;
+        // String id = gameID;
+        // return id;
+        Integer id = Integer.parseInt(gameID);
+        Optional<Game> game = gameRepository.findById(id);
+        //Boolean status = gameRepository.existsById(id);
+        //return status.toString();
+        return game.toString();
     }
 
     // The following URL endpoints will return HTML pages
