@@ -40,13 +40,20 @@ public class MainController
         return gameRepository.findAll();
     }
 
-    @GetMapping(path="games/{gameID}")
-    public @ResponseBody Integer displayGame(@RequestParam(value="gameID") Integer gameID)
+    // @GetMapping(path="game/{gameID}")
+    // public @ResponseBody Integer displayGame(@RequestParam Integer gameID)
+    // {
+    //     Integer id = gameID;
+    //     return id;
+    // }
+    
+    @GetMapping(path="game/{gameID}")
+    public @ResponseBody String displayGame(@PathVariable String gameID)
     {
-        Integer id = gameID;
+        //Integer id = 1;
+        String id = gameID;
         return id;
     }
-    
     // The following URL endpoints will return HTML pages
     @GetMapping(path="/")
     public @ResponseBody String displayHomepage()
