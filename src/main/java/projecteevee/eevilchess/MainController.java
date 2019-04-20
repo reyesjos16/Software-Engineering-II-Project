@@ -47,13 +47,14 @@ public class MainController
     //     return id;
     // }
     
-    @GetMapping(path="game/{gameID}")
+    @GetMapping(path="games/{gameID}")
     public @ResponseBody String displayGame(@PathVariable String gameID)
     {
         //Integer id = 1;
         String id = gameID;
         return id;
     }
+
     // The following URL endpoints will return HTML pages
     @GetMapping(path="/")
     public @ResponseBody String displayHomepage()
