@@ -47,10 +47,8 @@ public class MainController {
     // }
 
     @GetMapping(path = "games/{gameID}")
-    public @ResponseBody String displayGame(@PathVariable String gameID) {
-        // Integer id = 1;
-        // String id = gameID;
-        // return id;
+    public @ResponseBody String displayGame(@PathVariable String gameID)
+    {
         Integer id = Integer.parseInt(gameID);
         Optional<Game> game = gameRepository.findById(id);
         //Boolean status = gameRepository.existsById(id);
@@ -72,7 +70,7 @@ public class MainController {
     }
 
     @GetMapping(path="/startgame")
-    public String startGame()
+    public @ResponseBody String startGame()
     {
         return "startgame";
     }
