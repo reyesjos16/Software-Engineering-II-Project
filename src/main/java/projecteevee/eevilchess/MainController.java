@@ -107,7 +107,24 @@ public class MainController {
     }
 
 
-
+    @PostMapping(path = "/games/{gameID}/{playerID}/pieces")
+    public @ResponseBody String setPieceList(@PathVariable String gameID, @PathVariable String playerID,
+    @RequestParam String pieceList)
+    {
+        Integer id = Integer.parseInt(gameID);
+        
+        // Retrieve the Game from the database
+        Optional<Game> game = gameRepository.findById(id);
+        // Create initial piece list
+        // ToDo:
+        // Get the game object
+        Game currentGame = game.get();
+        // Update the move list & save
+        currentGame.initializePieceList(playerID, pieceList);
+        gameRepository.save(currentGame);
+        // Return the move that was made as confirmation
+        return pieceList + "\n";
+    }
 
 
     // The following URL endpoints will return HTML pages
