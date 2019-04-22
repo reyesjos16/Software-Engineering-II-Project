@@ -32,7 +32,28 @@ public class MainController {
 
         gameRepository.save(new_game);
 
-        return "New Game Created";
+        return "New Game Created\n";
+    }
+
+    @PostMapping(path = "/games/{gameID}/setparameters")
+    public @ResponseBody String setGameParameters(@PathVariable String gameID, @RequestParam Integer eevilNum, @RequestParam Integer boardDimensions)
+    {
+        Integer id = Integer.parseInt(gameID);
+        Optional<Game> game = gameRepository.findById(id);
+        Game currentGame = game.get();
+
+        // Set the eevil number for each player
+        // Note: current identical; may add ability to set different difficulties later
+        currentGame.setEevilNumber(1, eevilNum);
+        currentGame.setEevilNumber(2, eevilNum);
+        
+        // Set the board dimensions
+        currentGame.setBoardDimensions(boardDimensions);
+
+        // Save the game object
+        gameRepository.save(currentGame);
+
+        return "Game Parameters Set\n";
     }
 
     @GetMapping(path = "/games")
@@ -93,18 +114,18 @@ public class MainController {
     @GetMapping(path="/")
     public @ResponseBody String displayHomepage()
     {
-        return "homepage";
+        return "homepage\n";
     }
 
     @GetMapping(path="/profile")
     public @ResponseBody String displayProfile()
     {
-        return "profile";
+        return "profile\n";
     }
 
     @GetMapping(path="/startgame")
     public @ResponseBody String startGame()
     {
-        return "startgame";
+        return "startgame\n";
     }
 }
