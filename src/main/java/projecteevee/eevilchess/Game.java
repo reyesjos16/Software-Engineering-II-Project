@@ -102,8 +102,19 @@ public class Game
         }
     }
 
-    public void initializePieceList(Integer playerNumber, String pieceList)
+    public void initializePieceList(String playerID, String pieceList)
     {
+        Integer playerNumber;
+
+        if(this.player1.contentEquals(playerID))
+        {
+            playerNumber = 1;
+        }
+        else
+        {
+            playerNumber = 2;
+        }
+        
         if(playerNumber == 1)
         {
             this.p1_piece_list = pieceList;
@@ -128,12 +139,12 @@ public class Game
 
     public void updateMoveList(String playerID, String move)
     {
-        System.out.println(this.player1);
+        /* System.out.println(this.player1);
         System.out.println(this.player2);
         System.out.println(this.player1 == playerID);
         System.out.println(this.player1.length());
         System.out.println(playerID.length());
-        System.out.println(this.player1.contentEquals(playerID));
+        System.out.println(this.player1.contentEquals(playerID)); */
 
         if(this.player1.contentEquals(playerID))
         {
