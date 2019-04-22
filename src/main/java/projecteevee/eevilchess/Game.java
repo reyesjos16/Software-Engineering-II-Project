@@ -126,6 +126,25 @@ public class Game
         }
     }
 
+    public void updateMoveList(String playerID, String move)
+    {
+        System.out.println(this.player1);
+        System.out.println(this.player2);
+        System.out.println(this.player1 == playerID);
+        System.out.println(this.player1.length());
+        System.out.println(playerID.length());
+        System.out.println(this.player1.contentEquals(playerID));
+
+        if(this.player1.contentEquals(playerID))
+        {
+            this.p1_move_list = p1_move_list + move;
+        }
+        else
+        {
+            this.p2_move_list = p2_move_list + move;
+        }
+    }
+
     @Override
     public String toString()
     {
