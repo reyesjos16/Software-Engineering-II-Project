@@ -68,6 +68,20 @@ public class MainController {
     @PostMapping(path = "games/{gameID}/{playerID}/movelist")
     public @ResponseBody String updateMoveList(@PathVariable String gameID, @PathVariable String playerID, @RequestParam String piece, @RequestParam String current_tile, @RequestParam String new_tile)
     {
+        //return gameID + " " + playerID + " " + piece + " " + current_tile + " " + new_tile + "\n";
+        Integer id = Integer.parseInt(gameID);
+        
+        // Retrieve the Game from the database
+        Optional<Game> game = gameRepository.findById(id);
+        // Define a new Move
+        // ToDo: JSON move
+        String newMove = playerID + " " + piece + " " + current_tile + " " + new_tile + "\n";
+        // Get the game object
+        Game currentGame = game.get();
+        // Update the move list & save
+        currentGame.updateMoveList(playerID, newMove);
+        gameRepository.save(currentGame);
+        // Return the move that was made as confirmation
         return gameID + " " + playerID + " " + piece + " " + current_tile + " " + new_tile + "\n";
     }
 
