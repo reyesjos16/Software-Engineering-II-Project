@@ -1,7 +1,83 @@
 <!DOCTYPE html>
 <html>
+<head>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<script>
+	function validatemail(mail)
+	{
+    
+	if(mail=="")
+	{
+        return false
+	}
+	else
+	{
+        var m=mail.split('@');
+		if(m.length!=2)
+		{
+            return false
+        }else
+        {
+            var result= true
+            if(m[0].length==0 || m[1].length==0){
+                return false;
+            }else{
+                var frs = m[0].charAt(0);
+                
+                if(frs == " "|| !isNaN(frs)){
+                    return false
+                }
+                frs=m[1]
+                
+                if(frs == " "|| !isNaN(frs)){
+                    return false
+                }
+                if(m[0].indexOf('..')!=-1 || m[1].indexOf('..')!=-1 || m[0].indexOf('-')!=-1 ){
+                    return false
+                }
+                if(m[1].indexOf['.'] == -1){
+                    return false
+                }
+                var len = frs.length-1
+                for(var i=0;i<emailchar.length;i++){
+                    if((m[0].indexOf(emailchar[i])!= -1) || (m[1].indexOf(emailchar[i])!= -1)){
+                        result = false;
+                        break;
+                    }
+                }
+                for(var i=0;i<nums.length;i++){
+                    if((m[1].indexOf(nums[i])!= -1)){
+                        result = false;
+                        break;
+                    }
+                }
+                if(frs.charAt(len) == '.' || frs.charAt(0) == '.' ){
+                    return false
+                }
+                
+            }
+            return result;
+        }
+    }
+}
+function valid()
+{
+	var mail = document.getElementById("mail").value;
+if(!validatemail(mail)){
+					alert("Invalid Email");
+					
+                }
+                else{
+                    
+                }
+}
+
+</script>
+
+
+
 <style type="text/css">
     body
     {
@@ -46,19 +122,25 @@ font-size: 15px;
 align: center;
 }
 </style>
+
+</head>
 <body>
 
 		<div class = "root">
         <div class = "form">
-        <form action="/register">
+       
 
 <center>
 <br>
 <br>
 <br>
 
-            <h1 align="center">EeViL Chess Registration</h1><br>
+			<h1 align="center">EeViL Chess Registration</h1><br>
+			<form method="POST" action=""></form>
 <table>
+	
+
+	</form>
 <tr> 
 <td>Username</td>
 <td> <input type="text" placeholder="Enter Username"> </td>
@@ -66,8 +148,7 @@ align: center;
 <br>
 <tr>
 <td> E-mail </td>
-<td> <input type="text" placeholder=" Enter E-mail"> <td>
-</tr>
+<td> <input type="text" placeholder=" Enter E-mail" id="mail"> <td>
 <br>
 <tr>
 <td> Password </td>
@@ -75,12 +156,13 @@ align: center;
 </tr>
 <tr>
 <td>Conform Password </td>
-<td> <input type="text" placeholder=" Enter Conform Password"> <td>
+<td> <input type="text" placeholder=" Enter Confirm Password"> <td>
 </tr>
 </table>
 
 <br><br>
-<button type="submit">Register</button>
+<button type="submit" onclick="valid()">Register</button>
+</form>
 
 </center>
         </form>
