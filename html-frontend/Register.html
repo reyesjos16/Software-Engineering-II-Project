@@ -3,74 +3,28 @@
 <head>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
+<script src="Validation.js"></script>
 <script>
-	function validatemail(mail)
-	{
-    
-	if(mail=="")
-	{
-        return false
-	}
-	else
-	{
-        var m=mail.split('@');
-		if(m.length!=2)
-		{
-            return false
-        }else
-        {
-            var result= true
-            if(m[0].length==0 || m[1].length==0){
-                return false;
-            }else{
-                var frs = m[0].charAt(0);
-                
-                if(frs == " "|| !isNaN(frs)){
-                    return false
-                }
-                frs=m[1]
-                
-                if(frs == " "|| !isNaN(frs)){
-                    return false
-                }
-                if(m[0].indexOf('..')!=-1 || m[1].indexOf('..')!=-1 || m[0].indexOf('-')!=-1 ){
-                    return false
-                }
-                if(m[1].indexOf['.'] == -1){
-                    return false
-                }
-                var len = frs.length-1
-                for(var i=0;i<emailchar.length;i++){
-                    if((m[0].indexOf(emailchar[i])!= -1) || (m[1].indexOf(emailchar[i])!= -1)){
-                        result = false;
-                        break;
-                    }
-                }
-                for(var i=0;i<nums.length;i++){
-                    if((m[1].indexOf(nums[i])!= -1)){
-                        result = false;
-                        break;
-                    }
-                }
-                if(frs.charAt(len) == '.' || frs.charAt(0) == '.' ){
-                    return false
-                }
-                
-            }
-            return result;
-        }
-    }
-}
+	
+
 function valid()
 {
 	var mail = document.getElementById("mail").value;
-if(!validatemail(mail)){
-					alert("Invalid Email");
-					
+    var uname = document.getElementById("uname").value;
+	 
+	if(!validatename(uname)){
+                   
+					alert("Invalid Username")
                 }
                 else{
+                   
+    }
+    if(!validatemail(mail)){
                     
+					alert("Invalid Email")
+                }
+                else{
+                   
                 }
 }
 
@@ -143,7 +97,7 @@ align: center;
 	</form>
 <tr> 
 <td>Username</td>
-<td> <input type="text" placeholder="Enter Username"> </td>
+<td> <input type="text" placeholder="Enter Username" id="uname"> </td>
 </tr>
 <br>
 <tr>
