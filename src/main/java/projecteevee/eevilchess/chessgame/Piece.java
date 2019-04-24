@@ -46,6 +46,14 @@ public abstract class Piece
         movelist = validMoveList();
     }
 
+    public void move(int x, int y)
+    {
+        this.board.getTile(this.getXcoordinate(), this.getYcoordinate()).setPiece(null);
+        this.xcoordinate = x;
+        this.ycoordinate = y;
+        this.board.placeOnTile(x, y, this);
+    }
+
     // TODO: Decide if capture() and captured() are still necessary
 
     // Capture opponents piece
