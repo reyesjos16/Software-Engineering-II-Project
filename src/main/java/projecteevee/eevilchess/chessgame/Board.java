@@ -343,6 +343,20 @@ public class Board
         System.out.println(tilessnapped + " tiles snapped.");
     }
 
+    public boolean checkmove(int startx, int starty, int targetx, int targety)
+    {
+        Piece temp = this.getTile(startx, starty).getPiece();
+        if(temp != null)
+        {
+            if(temp.getMovelist().contains(this.getTile(targetx, targety)))
+            {
+                temp.move(targetx, targety);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public JSONObject getBoardJSON()
     {
         JSONObject fullboard = new JSONObject();
