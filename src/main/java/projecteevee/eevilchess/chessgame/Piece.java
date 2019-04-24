@@ -52,6 +52,7 @@ public abstract class Piece
         this.xcoordinate = x;
         this.ycoordinate = y;
         this.board.placeOnTile(x, y, this);
+        this.updateMoves();
     }
 
     // TODO: Decide if capture() and captured() are still necessary
