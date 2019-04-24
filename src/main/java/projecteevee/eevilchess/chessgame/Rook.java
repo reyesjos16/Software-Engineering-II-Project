@@ -36,11 +36,6 @@ public class Rook extends Piece
         return movelist;
     }
 
-    public void move(int x, int y)
-    {
-
-    }
-
     public void capture()
     {
         captured = true;

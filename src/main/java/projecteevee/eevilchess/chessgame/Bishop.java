@@ -10,10 +10,6 @@ public class Bishop extends Piece {
         this.setXcoordinate(x);
         this.setYcoordinate(y);
     }
-    // TODO: Add Bishop specific functionality
-    public void move(int x, int y) {
-        
-    }
 
     public void capture() {
         // if a piece exists on the square to which this piece
