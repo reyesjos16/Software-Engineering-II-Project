@@ -332,6 +332,7 @@ public class Board
                     if(!temp.getPiece().getName().equals("king"))
                     {
                         //I don't feel so good
+                        System.out.println(getCharValue(temp.getX()) + "" + (temp.getY() + 1) + " doesn't feel so good.");
                         tilessnapped++;
                         i.remove();
                     }
@@ -339,6 +340,7 @@ public class Board
                 else
                 {
                     //I don't feel so good
+                    System.out.println(getCharValue(temp.getX()) + "" + (temp.getY() + 1) + " doesn't feel so good.");
                     tilessnapped++;
                     i.remove();
                 }
