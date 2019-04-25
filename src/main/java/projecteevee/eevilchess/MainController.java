@@ -130,21 +130,37 @@ public class MainController {
 
 
     // The following URL endpoints will return HTML pages
+    // @GetMapping(path="/")
+    // public @ResponseBody String displayHomepage()
+    // {
+    //     return "homepage\n";
+    // }
+
     @GetMapping(path="/")
-    public @ResponseBody String displayHomepage()
+    public String displayHomepage()
     {
-        return "homepage\n";
+        return "index";
     }
 
+    // @GetMapping(path="/profile")
+    // public @ResponseBody String displayProfile()
+    // {
+    //     return "profile\n";
+    // }
     @GetMapping(path="/profile")
-    public @ResponseBody String displayProfile()
+    public String displayProfile()
     {
-        return "profile\n";
+        return "profile";
     }
 
+    // @GetMapping(path="/startgame")
+    // public @ResponseBody String startGame()
+    // {
+    //     return "startgame\n";
+    // }
     @GetMapping(path="/startgame")
-    public @ResponseBody String startGame()
+    public String startGame()
     {
-        return "startgame\n";
+        return "startgame";
     }
 }

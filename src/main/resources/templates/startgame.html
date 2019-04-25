@@ -6,8 +6,10 @@ lang="en">
         <title>Start a Game of Eevil Chess</title>
         <style>
             </style>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" 
-        name="viewport" content="width=device-width, initial-scale=1"/>
+        <!-- <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" 
+        name="viewport" content="width=device-width, initial-scale=1"/> -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Imports -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -43,6 +45,7 @@ lang="en">
           </nav>
           <div class="row" id="content">
         <h1>Start a Game of Eevil Chess</h1>
+        <!-- 
         <form action="#" th:action="@{/startgame}" th:object="${new_game}" method="post">
             <p>GameID: <input type="text" th:field="*{game_id}" /></p>
             <p>Player1 ID: <input type="text" th:field="*{player1_id}" /></p>
@@ -52,6 +55,15 @@ lang="en">
             <p>Randomize Pieces?: <input type="text" th:field="*{randomize_pieces}" /></p>
             
             <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+        </form>-->
+        <form action="/eevee/newgame">
+          <p>GameID <input type="text" name="gameID"/></p>
+          <p>Player1 ID <input type="text" name="Player1ID"/></p>
+          <p>Player 2 ID <input type="text" name="Player2ID"/></p>
+          <p>Turn Duration <input type="text" name="turnduration"/></p>
+          <p>Board Dimensions <input type="text" name="bddimensions"/></p>
+          <p>Randomize Pieces <input type="radio" name="randomizepieces"/></p>
+          <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
         </form>
           </div>
             <!-- Footer -->
