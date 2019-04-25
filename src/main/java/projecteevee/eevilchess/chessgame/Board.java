@@ -47,6 +47,11 @@ public class Board
         }
     }
 
+    public boolean testBuildTable(int cols, int rws)
+    {
+        this.buildTable(cols, rws);
+        return board.size() == cols*rws;
+    }
 
     private Piece getRandomPieceWeighted(int xpos, int ypos, Player p, int difficultyfactor)
     {
@@ -340,7 +345,14 @@ public class Board
             }
         }
         reCheckMoves();
-        System.out.println(tilessnapped + " tiles snapped.");
+        //System.out.println(tilessnapped + " tiles snapped.");
+    }
+
+    public boolean testSnap()
+    {
+        int beforesize = board.size();
+        this.thanosSnap();
+        return board.size() == beforesize/2;
     }
 
     public boolean checkmove(int startx, int starty, int targetx, int targety)
