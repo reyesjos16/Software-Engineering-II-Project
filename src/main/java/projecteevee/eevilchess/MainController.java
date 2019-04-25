@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,6 +57,7 @@ public class MainController {
         return "Game Parameters Set\n";
     }
 
+    @CrossOrigin(origins = "http://localhost:9000")
     @GetMapping(path = "/games")
     public @ResponseBody Iterable<Game> listGames() {
         return gameRepository.findAll();
@@ -128,21 +130,37 @@ public class MainController {
 
 
     // The following URL endpoints will return HTML pages
+    // @GetMapping(path="/")
+    // public @ResponseBody String displayHomepage()
+    // {
+    //     return "homepage\n";
+    // }
+
     @GetMapping(path="/")
-    public @ResponseBody String displayHomepage()
+    public String displayHomepage()
     {
-        return "homepage\n";
+        return "index";
     }
 
+    // @GetMapping(path="/profile")
+    // public @ResponseBody String displayProfile()
+    // {
+    //     return "profile\n";
+    // }
     @GetMapping(path="/profile")
-    public @ResponseBody String displayProfile()
+    public String displayProfile()
     {
-        return "profile\n";
+        return "profile";
     }
 
+    // @GetMapping(path="/startgame")
+    // public @ResponseBody String startGame()
+    // {
+    //     return "startgame\n";
+    // }
     @GetMapping(path="/startgame")
-    public @ResponseBody String startGame()
+    public String startGame()
     {
-        return "startgame\n";
+        return "startgame";
     }
 }
