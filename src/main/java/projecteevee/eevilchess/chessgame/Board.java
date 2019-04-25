@@ -47,6 +47,11 @@ public class Board
         }
     }
 
+    public boolean testBuildTable(int cols, int rws)
+    {
+        this.buildTable(cols, rws);
+        return board.size() == cols*rws;
+    }
 
     private Piece getRandomPieceWeighted(int xpos, int ypos, Player p, int difficultyfactor)
     {
@@ -179,6 +184,7 @@ public class Board
             //Black pawn
             this.placeOnTile(startcolB - i, rows - 2, new Pawn(startcolB - i, rows - 2, black, this));
         }
+        this.reCheckMoves();
     }
 
     public void populateTableEevil(Player white, Player black)
@@ -201,6 +207,7 @@ public class Board
             this.placeOnTile(startcolW + i, 1, getRandomPieceWeighted(startcolW + i, 1, white, WHITE_DIFFICULTY));
             this.placeOnTile(startcolB - i, rows - 2, getRandomPieceWeighted(startcolW - i, rows - 2, black, BLACK_DIFFICULTY));
         }
+        this.reCheckMoves();
     }
 
     //ACII value of lowercase letters
@@ -302,12 +309,11 @@ public class Board
     //👊👌
     public void thanosSnap()
     {
-
         int target = board.size()/2;
         int tilessnapped = 0;
         Iterator i = this.board.entrySet().iterator();
         //Snap will continue until half of the board is gone
-        while(tilessnapped < target)
+        while(tilessnapped < target && board.size() > 2)
         {
             //Restart the iterator if it has reached the end and we haven't achieved 50% snapped
             if(!i.hasNext())
@@ -315,7 +321,7 @@ public class Board
                 i = this.board.entrySet().iterator();
             }
             //This makes absolutely sure snap selection is not biased
-            if(ThreadLocalRandom.current().nextInt(1, 3) == 1)
+            if(ThreadLocalRandom.current().nextBoolean())
             {
                 Map.Entry tile = (Map.Entry)i.next();
                 String key = (String)tile.getKey();
@@ -327,6 +333,7 @@ public class Board
                     if(!temp.getPiece().getName().equals("king"))
                     {
                         //I don't feel so good
+                        System.out.println("Tile " + getCharValue(temp.getX()) + "" + (temp.getY() + 1) + " doesn't feel so good.");
                         tilessnapped++;
                         i.remove();
                     }
@@ -334,13 +341,21 @@ public class Board
                 else
                 {
                     //I don't feel so good
+                    System.out.println("Tile " + getCharValue(temp.getX()) + "" + (temp.getY() + 1) + " doesn't feel so good.");
                     tilessnapped++;
                     i.remove();
                 }
             }
         }
         reCheckMoves();
-        System.out.println(tilessnapped + " tiles snapped.");
+        //System.out.println(tilessnapped + " tiles snapped.");
+    }
+
+    public boolean testSnap()
+    {
+        int beforesize = board.size();
+        this.thanosSnap();
+        return board.size() == beforesize/2;
     }
 
     public boolean checkmove(int startx, int starty, int targetx, int targety)
