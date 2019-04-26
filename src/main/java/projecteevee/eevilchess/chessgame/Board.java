@@ -320,12 +320,12 @@ public class Board
             {
                 i = this.board.entrySet().iterator();
             }
+            Map.Entry tile = (Map.Entry)i.next();
+            String key = (String)tile.getKey();
+            Tile temp = board.get(key);
             //This makes absolutely sure snap selection is not biased
             if(ThreadLocalRandom.current().nextBoolean())
             {
-                Map.Entry tile = (Map.Entry)i.next();
-                String key = (String)tile.getKey();
-                Tile temp = board.get(key);
                 //Empty tiles can be snapped without any further checks
                 if(temp.getPiece() != null)
                 {
