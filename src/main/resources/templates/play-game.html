@@ -176,7 +176,7 @@ template: '<div  :class=setColor(colorcode) :id=setID(tilecode) @click=handleTil
     },
     methods: {
       stuff(tilecode) {
-        return "./img/black_bishop.png";
+        return "/img/black_bishop.png";
       },
       getImage(row, col) {
         var tilecode = String.fromCharCode(col + 64) + row;
