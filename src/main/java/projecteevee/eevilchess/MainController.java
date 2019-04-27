@@ -163,4 +163,10 @@ public class MainController {
     {
         return "startgame";
     }
+
+    @GetMapping(path="/play-game")
+    public String playGame()
+    {
+        return "play-game";
+    }
 }
