@@ -9,6 +9,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <link rel="stylesheet" href="/main.css">
     <link rel="icon" href="/img/tophat-eevee.ico">
@@ -53,9 +54,10 @@
         </template>
         <div></div>
         <col-labels v-for="col in cols" :colcode="String.fromCharCode(col + 64)"></col-labels>
-
       </div>
-
+      <div class="axiosTest">
+        <span>{{info}}</span>
+      </div>
       <!-- Footer -->
       <div class="row" id="footer">
         &copy Team Eevee <br />
@@ -225,6 +227,26 @@
           } 
         }
       },
+    }
+  });
+
+  var app2 = new Vue({
+    el: ".axiosTest",
+    data () {
+      return {
+        info: 'Nothing here'
+      }
+    },
+    mounted () {
+      axios
+        .get('http://localhost:8080/eevee/games/')
+        .then(response => {
+          this.info = response.data;
+        })
+        .catch(error => {
+          console.log("Heres an error:\n" + error)
+        })
+        
     }
   });
 
