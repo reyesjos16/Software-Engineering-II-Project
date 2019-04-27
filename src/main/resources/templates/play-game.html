@@ -49,7 +49,7 @@
         <div v-for="col in cols + 1"></div>
         <template v-for="row in rows">
           <row :rowcode="row"></row>
-          <tile v-for="col in cols" :colorcode="row % 2 === 0 ? col % 2 + 1 : (col + 1) % 2 + 1" :tilecode="String.fromCharCode(col + 64) + row" :imgpath=getImage(row,col)></tile>
+          <tile v-for="col in cols" :colorcode=getColor(row,col) :tilecode="String.fromCharCode(col + 64) + row" :imgpath=getImage(row,col)></tile>
         </template>
         <div></div>
         <col-labels v-for="col in cols" :colcode="String.fromCharCode(col + 64)"></col-labels>
@@ -66,11 +66,96 @@
 </html>
 
 <script>
+
+  function highlightPath(path) {
+    console.log("In highlightPath")
+    for(var i = 0; i < path.length; i++) {
+      for(var j = 0; j < tileList.length; j++) {
+        if(tileList[j].id === path[j]) {
+          tileList[j].highlight = true;
+        }   
+      }
+    }
+  };
+  function clearHighlights() {
+    for(var i = 0; i < tileList.length; i++) {
+      tileList[i].highlight = false;
+    }
+  }
+  var tileList = [
+        { id: "A1", occupied: { piece: "/img/black_bishop.png", paths: ["A1", "A2", "A3"] }, highlight: false},
+        { id: "A2", occupied: { piece: "/img/black_bishop.png", paths: [] }, highlight: false},
+        { id: "A3", occupied: { piece: "", paths: [] }, highlight: false},
+        { id: "A4", occupied: { piece: "", paths: [] }, highlight: false},
+        { id: "A5", occupied: { piece: "", paths: [] }, highlight: false},
+        { id: "A6", occupied: { piece: "", paths: [] }, highlight: false},
+        { id: "A7", occupied: { piece: "/img/white_pawn.png", paths: [] }, highlight: false},
+        { id: "A8", occupied: { piece: "/img/white_knight.png", paths: [] }, highlight: false},
+        { id: "B1", occupied: { piece: "/img/black_rook.png", paths: [] }, highlight: false},
+        { id: "B2", occupied: { piece: "/img/black_bishop.png", paths: [] }, highlight: false},
+        { id: "B3", occupied: { piece: "", paths: [] }, highlight: false},
+        { id: "B4", occupied: { piece: "", paths: [] }, highlight: false},
+        { id: "B5", occupied: { piece: "", paths: [] }, highlight: false},
+        { id: "B6", occupied: { piece: "", paths: [] }, highlight: false},
+        { id: "B7", occupied: { piece: "/img/white_knight.png", paths: [] }, highlight: false},
+        { id: "B8", occupied: { piece: "/img/white_queen.png", paths: [] }, highlight: false},
+        { id: "C1", occupied: { piece: "/img/black_queen.png", paths: [] }, highlight: false},
+        { id: "C2", occupied: { piece: "/img/black_pawn.png", paths: [] }, highlight: false},
+        { id: "C3", occupied: { piece: "", paths: [] }, highlight: false},
+        { id: "C4", occupied: { piece: "", paths: [] }, highlight: false},
+        { id: "C5", occupied: { piece: "", paths: [] }, highlight: false},
+        { id: "C6", occupied: { piece: "", paths: [] }, highlight: false},
+        { id: "C7", occupied: { piece: "/img/white_pawn.png", paths: [] }, highlight: false},
+        { id: "C8", occupied: { piece: "/img/white_pawn.png", paths: [] }, highlight: false},
+        { id: "D1", occupied: { piece: "/img/black_queen.png", paths: [] }, highlight: false},
+        { id: "D2", occupied: { piece: "/img/black_bishop.png", paths: [] }, highlight: false},
+        { id: "D3", occupied: { piece: "", paths: [] }, highlight: false},
+        { id: "D4", occupied: { piece: "", paths: [] }, highlight: false},
+        { id: "D5", occupied: { piece: "", paths: [] }, highlight: false},
+        { id: "D6", occupied: { piece: "", paths: [] }, highlight: false},
+        { id: "D7", occupied: { piece: "/img/white_bishop.png", paths: [] }, highlight: false},
+        { id: "D8", occupied: { piece: "/img/white_king.png", paths: [] }, highlight: false},
+        { id: "E1", occupied: { piece: "/img/black_king.png", paths: [] }, highlight: false},
+        { id: "E2", occupied: { piece: "/img/black_knight.png", paths: [] }, highlight: false},
+        { id: "E3", occupied: { piece: "", paths: [] }, highlight: false},
+        { id: "E4", occupied: { piece: "", paths: [] }, highlight: false},
+        { id: "E5", occupied: { piece: "", paths: [] }, highlight: false},
+        { id: "E6", occupied: { piece: "", paths: [] }, highlight: false},
+        { id: "E7", occupied: { piece: "/img/white_queen.png", paths: [] }, highlight: false},
+        { id: "E8", occupied: { piece: "/img/white_queen.png", paths: [] }, highlight: false},
+        { id: "F1", occupied: { piece: "/img/black_knight.png", paths: [] }, highlight: false},
+        { id: "F2", occupied: { piece: "/img/black_pawn.png", paths: [] }, highlight: false},
+        { id: "F3", occupied: { piece: "", paths: [] }, highlight: false},
+        { id: "F4", occupied: { piece: "", paths: [] }, highlight: false},
+        { id: "F5", occupied: { piece: "", paths: [] }, highlight: false},
+        { id: "F6", occupied: { piece: "", paths: [] }, highlight: false},
+        { id: "F7", occupied: { piece: "/img/white_knight.png", paths: [] }, highlight: false},
+        { id: "F8", occupied: { piece: "/img/white_rook.png", paths: [] }, highlight: false},
+        { id: "G1", occupied: { piece: "/img/black_rook.png", paths: [] }, highlight: false},
+        { id: "G2", occupied: { piece: "/img/black_pawn.png", paths: [] }, highlight: false},
+        { id: "G3", occupied: { piece: "", paths: [] }, highlight: false},
+        { id: "G4", occupied: { piece: "", paths: [] }, highlight: false},
+        { id: "G5", occupied: { piece: "", paths: [] }, highlight: false},
+        { id: "G6", occupied: { piece: "", paths: [] }, highlight: false},
+        { id: "G7", occupied: { piece: "/img/white_knight.png", paths: [] }, highlight: false},
+        { id: "G8", occupied: { piece: "/img/white_rook.png", paths: [] }, highlight: false},
+        { id: "H1", occupied: { piece: "/img/black_pawn.png", paths: [] }, highlight: false},
+        { id: "H2", occupied: { piece: "/img/black_knight.png", paths: [] }, highlight: false},
+        { id: "H3", occupied: { piece: "", paths: [] }, highlight: false},
+        { id: "H4", occupied: { piece: "", paths: [] }, highlight: false},
+        { id: "H5", occupied: { piece: "", paths: [] }, highlight: false},
+        { id: "H6", occupied: { piece: "", paths: [] }, highlight: false},
+        { id: "H7", occupied: { piece: "/img/white_pawn.png", paths: [] }, highlight: false},
+        { id: "H8", occupied: { piece: "/img/white_queen.png", paths: [] }, highlight: false},
+      ];
   Vue.component('tile', {
     props: ['tilecode', 'colorcode', 'imgpath'],
     methods: {
       setColor(colorcode) {
-        if(colorcode % 2 === 0) {
+        if(typeof colorcode === "string") {
+          return colorcode;
+        }
+        else if(colorcode % 2 === 0) {
           return "tile2";
         } else {
           return "tile1";
@@ -79,11 +164,20 @@
       setID(tilecode) {
         return this.tilecode;
       },
+      
       handleTileClick(tilecode) {
-        alert('Hello, from tile ' + tilecode)
+        for(var i = 0; i < tileList.length; i++) {
+          if(tileList[i].id === tilecode) {
+            if(!tileList[i].highlight) {
+              clearHighlights();
+              highlightPath(tileList[i].occupied.paths);
+            }
+            
+          }
+        }
       },
     },
-template: '<div  :class=setColor(colorcode) :id=setID(tilecode) @click=handleTileClick(tilecode)><img :src=imgpath class="center"></div>'
+    template: '<div  :class=setColor(colorcode) :id=setID(tilecode) @click=handleTileClick(tilecode)><img :src=imgpath class="center"></div>'
   });
 
   Vue.component('row', {
@@ -107,77 +201,9 @@ template: '<div  :class=setColor(colorcode) :id=setID(tilecode) @click=handleTil
     data: {
       rows: 8,
       cols: 8,
-      tiles: [
-        { id: "A1", occupied: { piece: "/img/black_bishop.png", paths: [] }},
-        { id: "A2", occupied: { piece: "/img/black_bishop.png", paths: [] }},
-        { id: "A3", occupied: { piece: "", paths: [] }},
-        { id: "A4", occupied: { piece: "", paths: [] }},
-        { id: "A5", occupied: { piece: "", paths: [] }},
-        { id: "A6", occupied: { piece: "", paths: [] }},
-        { id: "A7", occupied: { piece: "/img/white_pawn.png", paths: [] }},
-        { id: "A8", occupied: { piece: "/img/white_knight.png", paths: [] }},
-        { id: "B1", occupied: { piece: "/img/black_rook.png", paths: [] }},
-        { id: "B2", occupied: { piece: "/img/black_bishop.png", paths: [] }},
-        { id: "B3", occupied: { piece: "", paths: [] }},
-        { id: "B4", occupied: { piece: "", paths: [] }},
-        { id: "B5", occupied: { piece: "", paths: [] }},
-        { id: "B6", occupied: { piece: "", paths: [] }},
-        { id: "B7", occupied: { piece: "/img/white_knight.png", paths: [] }},
-        { id: "B8", occupied: { piece: "/img/white_queen.png", paths: [] }},
-        { id: "C1", occupied: { piece: "/img/black_queen.png", paths: [] }},
-        { id: "C2", occupied: { piece: "/img/black_pawn.png", paths: [] }},
-        { id: "C3", occupied: { piece: "", paths: [] }},
-        { id: "C4", occupied: { piece: "", paths: [] }},
-        { id: "C5", occupied: { piece: "", paths: [] }},
-        { id: "C6", occupied: { piece: "", paths: [] }},
-        { id: "C7", occupied: { piece: "/img/white_pawn.png", paths: [] }},
-        { id: "C8", occupied: { piece: "/img/white_pawn.png", paths: [] }},
-        { id: "D1", occupied: { piece: "/img/black_queen.png", paths: [] }},
-        { id: "D2", occupied: { piece: "/img/black_bishop.png", paths: [] }},
-        { id: "D3", occupied: { piece: "", paths: [] }},
-        { id: "D4", occupied: { piece: "", paths: [] }},
-        { id: "D5", occupied: { piece: "", paths: [] }},
-        { id: "D6", occupied: { piece: "", paths: [] }},
-        { id: "D7", occupied: { piece: "/img/white_bishop.png", paths: [] }},
-        { id: "D8", occupied: { piece: "/img/white_king.png", paths: [] }},
-        { id: "E1", occupied: { piece: "/img/black_king.png", paths: [] }},
-        { id: "E2", occupied: { piece: "/img/black_knight.png", paths: [] }},
-        { id: "E3", occupied: { piece: "", paths: [] }},
-        { id: "E4", occupied: { piece: "", paths: [] }},
-        { id: "E5", occupied: { piece: "", paths: [] }},
-        { id: "E6", occupied: { piece: "", paths: [] }},
-        { id: "E7", occupied: { piece: "/img/white_queen.png", paths: [] }},
-        { id: "E8", occupied: { piece: "/img/white_queen.png", paths: [] }},
-        { id: "F1", occupied: { piece: "/img/black_knight.png", paths: [] }},
-        { id: "F2", occupied: { piece: "/img/black_pawn.png", paths: [] }},
-        { id: "F3", occupied: { piece: "", paths: [] }},
-        { id: "F4", occupied: { piece: "", paths: [] }},
-        { id: "F5", occupied: { piece: "", paths: [] }},
-        { id: "F6", occupied: { piece: "", paths: [] }},
-        { id: "F7", occupied: { piece: "/img/white_knight.png", paths: [] }},
-        { id: "F8", occupied: { piece: "/img/white_rook.png", paths: [] }},
-        { id: "G1", occupied: { piece: "/img/black_rook.png", paths: [] }},
-        { id: "G2", occupied: { piece: "/img/black_pawn.png", paths: [] }},
-        { id: "G3", occupied: { piece: "", paths: [] }},
-        { id: "G4", occupied: { piece: "", paths: [] }},
-        { id: "G5", occupied: { piece: "", paths: [] }},
-        { id: "G6", occupied: { piece: "", paths: [] }},
-        { id: "G7", occupied: { piece: "/img/white_knight.png", paths: [] }},
-        { id: "G8", occupied: { piece: "/img/white_rook.png", paths: [] }},
-        { id: "H1", occupied: { piece: "/img/black_pawn.png", paths: [] }},
-        { id: "H2", occupied: { piece: "/img/black_pawn.png", paths: [] }},
-        { id: "H3", occupied: { piece: "", paths: [] }},
-        { id: "H4", occupied: { piece: "", paths: [] }},
-        { id: "H5", occupied: { piece: "", paths: [] }},
-        { id: "H6", occupied: { piece: "", paths: [] }},
-        { id: "H7", occupied: { piece: "/img/white_pawn.png", paths: [] }},
-        { id: "H8", occupied: { piece: "/img/white_queen.png", paths: [] }},
-      ],
+      tiles: tileList,
     },
     methods: {
-      stuff(tilecode) {
-        return "/img/black_bishop.png";
-      },
       getImage(row, col) {
         var tilecode = String.fromCharCode(col + 64) + row;
         for(var i = 0; i < this.tiles.length; i++) {
@@ -186,6 +212,18 @@ template: '<div  :class=setColor(colorcode) :id=setID(tilecode) @click=handleTil
           }
         }
         return "";
+      },
+      getColor(row, col) {
+        var tilecode = String.fromCharCode(col + 64) + row;
+        for(var i = 0; i < this.tiles.length; i++) {
+          if(this.tiles[i].id === tilecode) {
+            if(this.tiles[i].highlight === false) {
+              return row % 2 === 0 ? col % 2 + 1 : (col + 1) % 2 + 1;
+            } else {
+              return "highlight";
+            }
+          } 
+        }
       },
     }
   });
@@ -220,6 +258,7 @@ template: '<div  :class=setColor(colorcode) :id=setID(tilecode) @click=handleTil
   }
 
   .highlight {
+    border: 1px solid #333;
     background-color: green;
   }
 </style>
