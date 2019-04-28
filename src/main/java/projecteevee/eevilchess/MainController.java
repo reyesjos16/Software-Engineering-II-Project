@@ -3,6 +3,7 @@ package projecteevee.eevilchess;
 import java.util.List;
 import java.util.Optional;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import projecteevee.eevilchess.Game;
 import projecteevee.eevilchess.GameRepository;
+
+import projecteevee.eevilchess.chessgame.Board;
+import projecteevee.eevilchess.chessgame.Player;
 
 @Controller
 @RequestMapping(path = "/eevee")
@@ -163,4 +167,38 @@ public class MainController {
     {
         return "startgame";
     }
+
+    @GetMapping(path="/play-game")
+    public String playGame()
+    {
+        return "play-game";
+    }
+
+    @GetMapping(path="/getnormalboardjson")
+    public @ResponseBody String getNormalBoardJSON()
+    {
+        // Create board with default size
+        Player p1 = new Player("white");
+        Player p2 = new Player("black");
+        Board b = new Board(8,8);
+        b.populateTableNormal(p1, p2);
+        JSONObject json = b.getBoardJSON();
+        String brd = json.toString();
+        return brd;
+    }
+
+    @GetMapping(path="/getrandomboardjson")
+    public @ResponseBody String getRandomBoardJSON()
+    {
+        // Create board with default size
+        Player p1 = new Player("white");
+        Player p2 = new Player("black");
+        Board b = new Board(8,8);
+        b.populateTableEevil(p1, p2);
+        JSONObject json = b.getBoardJSON();
+        String brd = json.toString();
+        return brd;
+    }
+
+
 }

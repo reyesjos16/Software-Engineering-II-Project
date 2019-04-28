@@ -16,7 +16,7 @@ public class Board
     private final int WHITE_DIFFICULTY = ThreadLocalRandom.current().nextInt(1, 11);
     private final int BLACK_DIFFICULTY = ThreadLocalRandom.current().nextInt(1, 11);
 
-    Board(int cols, int rows)
+    public Board(int cols, int rows)
     {
         this.buildTable(cols, rows);
     }
@@ -197,7 +197,7 @@ public class Board
             if(i != 3)
             {
                 this.placeOnTile(startcolW + i, 0, getRandomPieceWeighted(startcolW + i, 0, white, WHITE_DIFFICULTY));
-                this.placeOnTile(startcolB - i, rows - 1, getRandomPieceWeighted(startcolW - i, rows - 1, black, BLACK_DIFFICULTY));
+                this.placeOnTile(startcolB - i, rows - 1, getRandomPieceWeighted(startcolB - i, rows - 1, black, BLACK_DIFFICULTY));
             }
             else
             {
@@ -205,7 +205,7 @@ public class Board
                 this.placeOnTile(startcolB - i, rows - 1, new King(startcolB - i, rows - 1, black, this));
             }
             this.placeOnTile(startcolW + i, 1, getRandomPieceWeighted(startcolW + i, 1, white, WHITE_DIFFICULTY));
-            this.placeOnTile(startcolB - i, rows - 2, getRandomPieceWeighted(startcolW - i, rows - 2, black, BLACK_DIFFICULTY));
+            this.placeOnTile(startcolB - i, rows - 2, getRandomPieceWeighted(startcolB - i, rows - 2, black, BLACK_DIFFICULTY));
         }
         this.reCheckMoves();
     }

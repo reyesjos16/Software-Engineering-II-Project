@@ -1,6 +1,6 @@
 package projecteevee.eevilchess.chessgame;
 
-public class Game extends Thread
+public class ChessGame extends Thread
 {
     private int starttime;
     private boolean timed, tournytime;
@@ -12,13 +12,13 @@ public class Game extends Thread
     private String board_dimensions;
     private Boolean randomize_pieces;
 
-    Game()
+    ChessGame()
     {
         super();
         timed = false;
     }
 
-    Game(boolean singletime, int start)
+    ChessGame(boolean singletime, int start)
     {
         super();
         tournytime = singletime;

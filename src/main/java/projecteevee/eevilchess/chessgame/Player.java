@@ -3,7 +3,7 @@ package projecteevee.eevilchess.chessgame;
 public class Player
 {
     private boolean iswhite;
-    Player(String clr)
+    public Player(String clr)
     {
         iswhite = clr.toLowerCase().equals("white");
     }
