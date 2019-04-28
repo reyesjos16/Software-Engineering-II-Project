@@ -174,8 +174,8 @@ public class MainController {
         return "play-game";
     }
 
-    @GetMapping(path="/getboardjson")
-    public @ResponseBody String getBoardJSON()
+    @GetMapping(path="/getnormalboardjson")
+    public @ResponseBody String getNormalBoardJSON()
     {
         // Create board with default size
         Player p1 = new Player("white");
@@ -186,4 +186,19 @@ public class MainController {
         String brd = json.toString();
         return brd;
     }
+
+    @GetMapping(path="/getrandomboardjson")
+    public @ResponseBody String getRandomBoardJSON()
+    {
+        // Create board with default size
+        Player p1 = new Player("white");
+        Player p2 = new Player("black");
+        Board b = new Board(8,8);
+        b.populateTableEevil(p1, p2);
+        JSONObject json = b.getBoardJSON();
+        String brd = json.toString();
+        return brd;
+    }
+
+
 }
