@@ -95,73 +95,6 @@
     }
     return board;
   };
-  /*var tileList = [
-    { "piece": { "type": "Pawn", "movelist": [ { "x": 5, "y": 2, "tilename": "a2" }, { "x": 5, "y": 3, "tilename": "a3" }], "player": "white" }, "x": 1, "y": 5, "tilename": "a1", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "a2", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "a3", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "a4", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "a5", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "a6", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "a7", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "a8", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "b1", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "b2", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "b3", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "b4", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "b5", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "b6", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "b7", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "b8", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "c1", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "c2", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "c3", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "c4", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "c5", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "c6", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "c7", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "c8", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "d1", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "d2", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "d3", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "d4", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "d5", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "d6", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "d7", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "d8", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "e1", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "e2", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "e3", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "e4", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "e5", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "e6", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "e7", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "e8", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "f1", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "f2", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "f3", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "f4", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "f5", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "f6", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "f7", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "f8", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "g1", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "g2", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "g3", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "g4", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "g5", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "g6", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "g7", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "g8", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "h1", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "h2", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "h3", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "h4", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "h5", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "h6", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "h7", "highlight": false },
-    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "h8", "highlight": false },
-        
-  ];*/
   
   Vue.component('tile', {
     props: ['tilecode', 'colorcode', 'imgpath'],
@@ -177,7 +110,6 @@
         }
       },
       handleTileClick(tilecode) {
-        alert("Hello from " + tilecode);
         for(var i = 0; i < tileList.length; i++) {
           if(tileList[i].tilename === tilecode) {
             if(!tileList[i].highlight) {
@@ -186,8 +118,7 @@
                 tileList[i].highlight = true;
                 highlightPath(tileList[i].piece.movelist);
               }
-            }
-            
+            }        
           }
         }
       },
@@ -243,7 +174,7 @@
     },
     mounted () {
       axios
-        .get('http://localhost:8080/eevee/getboardjson/')
+        .get('http://localhost:8080/eevee/getnormalboardjson/')
         .then(response => {
           tileList = addHighlights(response.data.tiles);
           this.tiles = tileList;
