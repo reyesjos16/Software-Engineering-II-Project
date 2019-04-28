@@ -100,6 +100,7 @@ public class Board
             return new Queen(xpos, ypos, p, this);
         }
         //This will never be hit unless the random number generator breaks
+        System.out.println("We broke it");
         return null;
     }
 
