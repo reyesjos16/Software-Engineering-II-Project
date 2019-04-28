@@ -194,7 +194,7 @@
         return "empty";
       },
     },
-    created () {
+    mounted () {
       axios
         .get('http://localhost:8080/eevee/getrandomboardjson/')
         .then(response => {
