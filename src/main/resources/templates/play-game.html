@@ -81,22 +81,27 @@
     moveString = "start_x=" + startx + "&start_y=" + starty + "&target_x=" + targetx + "&target_y=" + targety;
     console.log(moveString);
     axios.post('http://localhost:8080/eevee/move/', moveString).then(response => console.log(response))
-    axios.get('http://localhost:8080/eevee/getcurrentboard/').then(response => tileList = response.data.tiles)
+    axios.get('http://localhost:8080/eevee/getcurrentboard/').then(response => app.tiles = addHighlights(response.data.tiles))
+    if(playerTurn === "white") {
+      playerTurn = "black";
+    } else {
+      playerTurn = "white";
+    }
   }
 
   function highlightPath(path) {
     console.log("In highlightPath")
     for(var i = 0; i < path.length; i++) {
-      for(var j = 0; j < tileList.length; j++) {
-        if(tileList[j].tilename === path[i].tilename) {
-          tileList[j].highlight = true;
+      for(var j = 0; j < app.tiles.length; j++) {
+        if(app.tiles[j].tilename === path[i].tilename) {
+          app.tiles[j].highlight = true;
         }   
       }
     }
   };
   function clearHighlights() {
-    for(var i = 0; i < tileList.length; i++) {
-      tileList[i].highlight = false;
+    for(var i = 0; i < app.tiles.length; i++) {
+      app.tiles[i].highlight = false;
     }
   };
   function getImgPath(color, piece) {
@@ -123,17 +128,17 @@
         }
       },
       handleTileClick(tilecode) {
-        for(var i = 0; i < tileList.length; i++) {
-          if(tileList[i].tilename === tilecode) {
-            if(!tileList[i].highlight) {
-              toMove = tileList[i]
+        for(var i = 0; i < app.tiles.length; i++) {
+          if(app.tiles[i].tilename === tilecode) {
+            if(!app.tiles[i].highlight) {
+              toMove = app.tiles[i]
               clearHighlights();
-              if(tileList[i].piece.type !== "none" && tileList[i].piece.player === playerTurn) {
-                tileList[i].highlight = true;
-                highlightPath(tileList[i].piece.movelist);
+              if(app.tiles[i].piece.type !== "none" && app.tiles[i].piece.player === playerTurn) {
+                app.tiles[i].highlight = true;
+                highlightPath(app.tiles[i].piece.movelist);
               }
-            } else if(tileList[i].piece.player !== playerTurn) {
-              movePiece(toMove, tileList[i]);
+            } else if(app.tiles[i].piece.player !== playerTurn) {
+              movePiece(toMove, app.tiles[i]);
             }      
           }
         }
@@ -189,19 +194,16 @@
         return "empty";
       },
     },
-    mounted () {
+    created () {
       axios
         .get('http://localhost:8080/eevee/getrandomboardjson/')
         .then(response => {
-          tileList = addHighlights(response.data.tiles);
-          console.log(tileList);
-          this.tiles = tileList;
+          this.tiles = addHighlights(response.data.tiles);
         })
         .catch(error => {
           console.log(error)
-        })
-        
-    }
+        })    
+    },
   });
 
   var app2 = new Vue({
