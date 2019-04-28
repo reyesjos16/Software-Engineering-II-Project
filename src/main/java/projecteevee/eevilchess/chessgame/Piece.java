@@ -95,6 +95,8 @@ public abstract class Piece
     public void setImagePath(String imagePath) { this.imagePath = imagePath; }
 
     public void setBoard(Board board) { this.board = board; }
+
+    public void setMovelist(ArrayList<Tile> moves) { movelist = moves; }
     // King will implement it's own "threatened" method
 
     // Special moves (since not all pieces have them) should be handled for each piece

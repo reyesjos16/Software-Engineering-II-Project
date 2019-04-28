@@ -2,6 +2,8 @@ package projecteevee.eevilchess.chessgame;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -238,6 +240,11 @@ public class Board
         return rows;
     }
 
+    public void placeTile(Tile t)
+    {
+        board.put(getCharValue(t.getX()) + "" + (t.getY()+1), t);
+    }
+
     //Returns tile if it exists
     //null if tile doesn't exist
     //format: <column_char><row_index>
@@ -373,6 +380,106 @@ public class Board
         return false;
     }
 
+    private static Piece getPiece(Player color, int x, int y, Board b, String type)
+    {
+        switch(type.toLowerCase())
+        {
+            case "king":
+                return new King(x,y,color,b);
+            case "queen":
+                return new Queen(x,y,color,b);
+            case "knight":
+                return new Knight(x,y,color,b);
+            case "bishop":
+                return new Bishop(x,y,color,b);
+            case "rook":
+                return new Rook(x,y,color,b);
+            case "pawn":
+                return new Pawn(x,y,color,b);
+            default:
+                System.err.println("Error finding type " + type);
+                return null;
+        }
+    }
+
+    private static ArrayList<Tile> readJSONMovelist(JSONArray jmovelist, Board tileset)
+    {
+        ArrayList<Tile> moves = new ArrayList<>();
+        for(int i = 0; i < jmovelist.length(); i++)
+        {
+            JSONObject ptr = jmovelist.getJSONObject(i);
+            moves.add(tileset.getTile(ptr.getInt("x"), ptr.getInt("y")));
+        }
+        return moves;
+    }
+
+    //Reads a piece's JSON
+    private static Piece readJSONPiece(JSONObject jpiece, int x, int y, Board b, Player white, Player black)
+    {
+        Piece newpiece = null;
+        Player setplayer;
+        if(jpiece.getString("player").equals("white"))
+        {
+            setplayer = white;
+        }
+        else
+        {
+            setplayer = black;
+        }
+        newpiece = getPiece(setplayer, x, y, b, jpiece.get("type").toString());
+        return newpiece;
+    }
+
+    //Reads a tile's JSON
+    private static Tile readJSONTile(JSONObject jtile, Board b, Player white, Player black)
+    {
+        int x = jtile.getInt("x");
+        int y = jtile.getInt("y");
+        Piece holding;
+        JSONObject jpiece = jtile.getJSONObject("piece");
+        if(!jpiece.getString("type").equals("none"))
+        {
+            holding = readJSONPiece(jtile.getJSONObject("piece"), x, y, b, white, black);
+        }
+        else
+        {
+            holding = null;
+        }
+        Tile newtile = new Tile(x, y);
+        newtile.setPiece(holding);
+        return newtile;
+    }
+
+    //Reads an entire board's JSON
+    public static Board convertBoardJSON(JSONObject jboard)
+    {
+        Board newboard = new Board(0, 0);
+        JSONArray tiles = jboard.getJSONArray("tiles");
+        Player white = new Player("white");
+        Player black = new Player("black");
+        //Build tiles on board
+        for(int i = 0; i < tiles.length(); i++)
+        {
+            JSONObject ptr = tiles.getJSONObject(i);
+            Tile newtile = readJSONTile(ptr, newboard, white, black);
+            newboard.placeTile(newtile);
+        }
+        //Build movelist after constructing tiles
+        for(int i = 0; i < tiles.length(); i++)
+        {
+            JSONObject ptr = tiles.getJSONObject(i);
+            JSONArray jmoves = ptr.getJSONObject("piece").getJSONArray("movelist");
+            if(jmoves.length() > 0)
+            {
+                int x = ptr.getInt("x");
+                int y = ptr.getInt("y");
+                ArrayList<Tile> newmoves = readJSONMovelist(jmoves, newboard);
+                newboard.getTile(x, y).getPiece().setMovelist(newmoves);
+            }
+        }
+        return newboard;
+    }
+
     public JSONObject getBoardJSON()
     {
         JSONObject fullboard = new JSONObject();
@@ -415,8 +522,8 @@ public class Board
             tilejson.put("piece", piecejson);
             boardjson.put(tilejson);
         }
-        fullboard.put("white_difficulty", WHITE_DIFFICULTY);
-        fullboard.put("black_difficulty", BLACK_DIFFICULTY);
+        //fullboard.put("white_difficulty", WHITE_DIFFICULTY);
+        //fullboard.put("black_difficulty", BLACK_DIFFICULTY);
         fullboard.put("tiles", boardjson);
         return fullboard;
     }
