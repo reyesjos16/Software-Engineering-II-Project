@@ -366,6 +366,7 @@ public class Board
             if(temp.getMovelist().contains(this.getTile(targetx, targety)))
             {
                 temp.move(targetx, targety);
+                reCheckMoves();
                 return true;
             }
         }
