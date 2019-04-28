@@ -16,7 +16,7 @@ public class Board
     private final int WHITE_DIFFICULTY = ThreadLocalRandom.current().nextInt(1, 11);
     private final int BLACK_DIFFICULTY = ThreadLocalRandom.current().nextInt(1, 11);
 
-    Board(int cols, int rows)
+    public Board(int cols, int rows)
     {
         this.buildTable(cols, rows);
     }
