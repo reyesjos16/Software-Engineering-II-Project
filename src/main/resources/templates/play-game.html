@@ -9,9 +9,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-    <link rel="stylesheet" href="./main.css">
-    <link rel="icon" href="./img/tophat-eevee.ico">
+    <link rel="stylesheet" href="/main.css">
+    <link rel="icon" href="/img/tophat-eevee.ico">
 	
     <title> Eevil Chess Homepage </title>
     <style>
@@ -24,7 +25,7 @@
       <div class="row" id="head">
         <table>
           <tr>
-            <td id="logo"> <img src="./img/tophat-eevee.gif" /> </td>
+            <td id="logo"> <img src="/img/tophat-eevee.gif" /> </td>
             <td id="title"><h1> Eevil Chess </h1></td>
           </tr>
         </table>
@@ -48,14 +49,15 @@
       <div class="board">
         <div v-for="col in cols + 1"></div>
         <template v-for="row in rows">
-          <row :rowcode="row"></row>
-          <tile v-for="col in cols" :colorcode="row % 2 === 0 ? col % 2 + 1 : (col + 1) % 2 + 1" :tilecode="String.fromCharCode(col + 64) + row" :imgpath=getImage(row,col)></tile>
+          <row :rowcode="9 - row"></row>
+          <tile v-for="col in cols" :colorcode=getColor(9-row,col) :tilecode="String.fromCharCode(col + 96) + (9-row)" :imgpath=getImage(9-row,col)></tile>
         </template>
         <div></div>
-        <col-labels v-for="col in cols" :colcode="String.fromCharCode(col + 64)"></col-labels>
-
+        <col-labels v-for="col in cols" :colcode="String.fromCharCode(col + 96)"></col-labels>
       </div>
-
+      <div class="axiosTest">
+        <span>{{tileList}}</span>
+      </div>
       <!-- Footer -->
       <div class="row" id="footer">
         &copy Team Eevee <br />
@@ -66,24 +68,62 @@
 </html>
 
 <script>
+
+  var tileList = [];
+
+  function highlightPath(path) {
+    console.log("In highlightPath")
+    for(var i = 0; i < path.length; i++) {
+      for(var j = 0; j < tileList.length; j++) {
+        if(tileList[j].tilename === path[i].tilename) {
+          tileList[j].highlight = true;
+        }   
+      }
+    }
+  };
+  function clearHighlights() {
+    for(var i = 0; i < tileList.length; i++) {
+      tileList[i].highlight = false;
+    }
+  };
+  function getImgPath(color, piece) {
+    return "/img/" + color.toLowerCase() + "_" + piece.toLowerCase() + ".png";
+  };
+  function addHighlights(board) {
+    for(var i = 0; i < board.length; i++) {
+      board[i]["highlight"] = false;
+    }
+    return board;
+  };
+  
   Vue.component('tile', {
     props: ['tilecode', 'colorcode', 'imgpath'],
     methods: {
       setColor(colorcode) {
-        if(colorcode % 2 === 0) {
+        if(typeof colorcode === "string") {
+          return colorcode;
+        }
+        else if(colorcode % 2 === 0) {
           return "tile2";
         } else {
           return "tile1";
         }
       },
-      setID(tilecode) {
-        return this.tilecode;
-      },
       handleTileClick(tilecode) {
-        alert('Hello, from tile ' + tilecode)
+        for(var i = 0; i < tileList.length; i++) {
+          if(tileList[i].tilename === tilecode) {
+            if(!tileList[i].highlight) {
+              clearHighlights();
+              if(tileList[i].piece.type !== "none") {
+                tileList[i].highlight = true;
+                highlightPath(tileList[i].piece.movelist);
+              }
+            }        
+          }
+        }
       },
     },
-template: '<div  :class=setColor(colorcode) :id=setID(tilecode) @click=handleTileClick(tilecode)><img :src=imgpath class="center"></div>'
+    template: '<div :class=setColor(colorcode) :id=tilecode @click=handleTileClick(tilecode)><img :src=imgpath class="center"></div>'
   });
 
   Vue.component('row', {
@@ -91,7 +131,7 @@ template: '<div  :class=setColor(colorcode) :id=setID(tilecode) @click=handleTil
     methods: {
 
     },
-    template: '<div>{{rowcode}}</div>'
+    template: '<div>{{ rowcode }}</div>'
   });
 
   Vue.component('col-labels', {
@@ -107,87 +147,55 @@ template: '<div  :class=setColor(colorcode) :id=setID(tilecode) @click=handleTil
     data: {
       rows: 8,
       cols: 8,
-      tiles: [
-        { id: "A1", occupied: { piece: "./img/black_bishop.png", paths: [] }},
-        { id: "A2", occupied: { piece: "./img/black_bishop.png", paths: [] }},
-        { id: "A3", occupied: { piece: "", paths: [] }},
-        { id: "A4", occupied: { piece: "", paths: [] }},
-        { id: "A5", occupied: { piece: "", paths: [] }},
-        { id: "A6", occupied: { piece: "", paths: [] }},
-        { id: "A7", occupied: { piece: "./img/white_pawn.png", paths: [] }},
-        { id: "A8", occupied: { piece: "./img/white_knight.png", paths: [] }},
-        { id: "B1", occupied: { piece: "./img/black_rook.png", paths: [] }},
-        { id: "B2", occupied: { piece: "./img/black_bishop.png", paths: [] }},
-        { id: "B3", occupied: { piece: "", paths: [] }},
-        { id: "B4", occupied: { piece: "", paths: [] }},
-        { id: "B5", occupied: { piece: "", paths: [] }},
-        { id: "B6", occupied: { piece: "", paths: [] }},
-        { id: "B7", occupied: { piece: "./img/white_knight.png", paths: [] }},
-        { id: "B8", occupied: { piece: "./img/white_queen.png", paths: [] }},
-        { id: "C1", occupied: { piece: "./img/black_queen.png", paths: [] }},
-        { id: "C2", occupied: { piece: "./img/black_pawn.png", paths: [] }},
-        { id: "C3", occupied: { piece: "", paths: [] }},
-        { id: "C4", occupied: { piece: "", paths: [] }},
-        { id: "C5", occupied: { piece: "", paths: [] }},
-        { id: "C6", occupied: { piece: "", paths: [] }},
-        { id: "C7", occupied: { piece: "./img/white_pawn.png", paths: [] }},
-        { id: "C8", occupied: { piece: "./img/white_pawn.png", paths: [] }},
-        { id: "D1", occupied: { piece: "./img/black_queen.png", paths: [] }},
-        { id: "D2", occupied: { piece: "./img/black_bishop.png", paths: [] }},
-        { id: "D3", occupied: { piece: "", paths: [] }},
-        { id: "D4", occupied: { piece: "", paths: [] }},
-        { id: "D5", occupied: { piece: "", paths: [] }},
-        { id: "D6", occupied: { piece: "", paths: [] }},
-        { id: "D7", occupied: { piece: "./img/white_bishop.png", paths: [] }},
-        { id: "D8", occupied: { piece: "./img/white_king.png", paths: [] }},
-        { id: "E1", occupied: { piece: "./img/black_king.png", paths: [] }},
-        { id: "E2", occupied: { piece: "./img/black_knight.png", paths: [] }},
-        { id: "E3", occupied: { piece: "", paths: [] }},
-        { id: "E4", occupied: { piece: "", paths: [] }},
-        { id: "E5", occupied: { piece: "", paths: [] }},
-        { id: "E6", occupied: { piece: "", paths: [] }},
-        { id: "E7", occupied: { piece: "./img/white_queen.png", paths: [] }},
-        { id: "E8", occupied: { piece: "./img/white_queen.png", paths: [] }},
-        { id: "F1", occupied: { piece: "./img/black_knight.png", paths: [] }},
-        { id: "F2", occupied: { piece: "./img/black_pawn.png", paths: [] }},
-        { id: "F3", occupied: { piece: "", paths: [] }},
-        { id: "F4", occupied: { piece: "", paths: [] }},
-        { id: "F5", occupied: { piece: "", paths: [] }},
-        { id: "F6", occupied: { piece: "", paths: [] }},
-        { id: "F7", occupied: { piece: "./img/white_knight.png", paths: [] }},
-        { id: "F8", occupied: { piece: "./img/white_rook.png", paths: [] }},
-        { id: "G1", occupied: { piece: "./img/black_rook.png", paths: [] }},
-        { id: "G2", occupied: { piece: "./img/black_pawn.png", paths: [] }},
-        { id: "G3", occupied: { piece: "", paths: [] }},
-        { id: "G4", occupied: { piece: "", paths: [] }},
-        { id: "G5", occupied: { piece: "", paths: [] }},
-        { id: "G6", occupied: { piece: "", paths: [] }},
-        { id: "G7", occupied: { piece: "./img/white_knight.png", paths: [] }},
-        { id: "G8", occupied: { piece: "./img/white_rook.png", paths: [] }},
-        { id: "H1", occupied: { piece: "./img/black_pawn.png", paths: [] }},
-        { id: "H2", occupied: { piece: "./img/black_pawn.png", paths: [] }},
-        { id: "H3", occupied: { piece: "", paths: [] }},
-        { id: "H4", occupied: { piece: "", paths: [] }},
-        { id: "H5", occupied: { piece: "", paths: [] }},
-        { id: "H6", occupied: { piece: "", paths: [] }},
-        { id: "H7", occupied: { piece: "./img/white_pawn.png", paths: [] }},
-        { id: "H8", occupied: { piece: "./img/white_queen.png", paths: [] }},
-      ],
+      tiles: tileList,
     },
     methods: {
-      stuff(tilecode) {
-        return "./img/black_bishop.png";
-      },
       getImage(row, col) {
-        var tilecode = String.fromCharCode(col + 64) + row;
+        var tilecode = String.fromCharCode(col + 96) + row;
         for(var i = 0; i < this.tiles.length; i++) {
-          if(this.tiles[i].id === tilecode) {
-            return this.tiles[i].occupied.piece;
+          if(this.tiles[i].tilename === tilecode && this.tiles[i].piece.type !== "none") {
+            return getImgPath(this.tiles[i].piece.player, this.tiles[i].piece.type);
           }
         }
         return "";
       },
+      getColor(row, col) {
+        var tilecode = String.fromCharCode(col + 96) + row;
+        for(var i = 0; i < this.tiles.length; i++) {
+          if(this.tiles[i].tilename === tilecode) {
+            if(this.tiles[i].highlight === false) {
+              return row % 2 === 0 ? col % 2 + 1 : (col + 1) % 2 + 1;
+            } else {
+              return "highlight";
+            }
+          } 
+        }
+        return "empty";
+      },
+    },
+    mounted () {
+      axios
+        .get('http://localhost:8080/eevee/getrandomboardjson/')
+        .then(response => {
+          tileList = addHighlights(response.data.tiles);
+          console.log(tileList);
+          this.tiles = tileList;
+        })
+        .catch(error => {
+          console.log(error)
+        })
+        
     }
+  });
+
+  var app2 = new Vue({
+    el: ".axiosTest",
+    data () {
+      return {
+        info: tileList
+      }
+    },
+    
   });
 
 
@@ -220,6 +228,12 @@ template: '<div  :class=setColor(colorcode) :id=setID(tilecode) @click=handleTil
   }
 
   .highlight {
+    border: 1px solid #333;
     background-color: green;
+  }
+  
+  .empty {
+    border: 1px solid #333;
+    background-color: black;
   }
 </style>
