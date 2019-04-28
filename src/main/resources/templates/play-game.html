@@ -178,7 +178,7 @@
             return getImgPath(this.tiles[i].piece.player, this.tiles[i].piece.type);
           }
         }
-        return "";
+        return null;
       },
       getColor(row, col) {
         var tilecode = String.fromCharCode(col + 96) + row;
