@@ -170,13 +170,15 @@
             }
           } 
         }
+        return "empty";
       },
     },
     mounted () {
       axios
-        .get('http://localhost:8080/eevee/getnormalboardjson/')
+        .get('http://localhost:8080/eevee/getrandomboardjson/')
         .then(response => {
           tileList = addHighlights(response.data.tiles);
+          console.log(tileList);
           this.tiles = tileList;
         })
         .catch(error => {
@@ -190,7 +192,7 @@
     el: ".axiosTest",
     data () {
       return {
-        info: 'Nothing here'
+        info: tileList
       }
     },
     
@@ -228,5 +230,10 @@
   .highlight {
     border: 1px solid #333;
     background-color: green;
+  }
+  
+  .empty {
+    border: 1px solid #333;
+    background-color: black;
   }
 </style>
