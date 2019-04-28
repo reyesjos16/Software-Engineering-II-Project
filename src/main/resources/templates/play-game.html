@@ -70,6 +70,19 @@
 <script>
 
   var tileList = [];
+  var playerTurn = "white";
+  var toMove;
+
+  function movePiece(start, target) {
+    startx = start.tilename[0].charCodeAt(0) - 97;
+    starty = start.tilename[1] - 1;
+    targetx = target.tilename[0].charCodeAt(0) - 97;
+    targety = target.tilename[1] - 1;
+    moveString = "start_x=" + startx + "&start_y=" + starty + "&target_x=" + targetx + "&target_y=" + targety;
+    console.log(moveString);
+    axios.post('http://localhost:8080/eevee/move/', moveString).then(response => console.log(response))
+    axios.get('http://localhost:8080/eevee/getcurrentboard/').then(response => tileList = response.data.tiles)
+  }
 
   function highlightPath(path) {
     console.log("In highlightPath")
@@ -113,12 +126,15 @@
         for(var i = 0; i < tileList.length; i++) {
           if(tileList[i].tilename === tilecode) {
             if(!tileList[i].highlight) {
+              toMove = tileList[i]
               clearHighlights();
-              if(tileList[i].piece.type !== "none") {
+              if(tileList[i].piece.type !== "none" && tileList[i].piece.player === playerTurn) {
                 tileList[i].highlight = true;
                 highlightPath(tileList[i].piece.movelist);
               }
-            }        
+            } else if(tileList[i].piece.player !== playerTurn) {
+              movePiece(toMove, tileList[i]);
+            }      
           }
         }
       },
