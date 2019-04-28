@@ -49,14 +49,14 @@
       <div class="board">
         <div v-for="col in cols + 1"></div>
         <template v-for="row in rows">
-          <row :rowcode="row"></row>
-          <tile v-for="col in cols" :colorcode=getColor(row,col) :tilecode="String.fromCharCode(col + 64) + row" :imgpath=getImage(row,col)></tile>
+          <row :rowcode="9 - row"></row>
+          <tile v-for="col in cols" :colorcode=getColor(9-row,col) :tilecode="String.fromCharCode(col + 96) + (9-row)" :imgpath=getImage(9-row,col)></tile>
         </template>
         <div></div>
-        <col-labels v-for="col in cols" :colcode="String.fromCharCode(col + 64)"></col-labels>
+        <col-labels v-for="col in cols" :colcode="String.fromCharCode(col + 96)"></col-labels>
       </div>
       <div class="axiosTest">
-        <span>{{info}}</span>
+        <span>{{tileList}}</span>
       </div>
       <!-- Footer -->
       <div class="row" id="footer">
@@ -69,11 +69,13 @@
 
 <script>
 
+  var tileList = [];
+
   function highlightPath(path) {
     console.log("In highlightPath")
     for(var i = 0; i < path.length; i++) {
       for(var j = 0; j < tileList.length; j++) {
-        if(tileList[j].id === path[j]) {
+        if(tileList[j].tilename === path[i].tilename) {
           tileList[j].highlight = true;
         }   
       }
@@ -83,73 +85,84 @@
     for(var i = 0; i < tileList.length; i++) {
       tileList[i].highlight = false;
     }
-  }
-  var tileList = [
-        { id: "A1", occupied: { piece: "/img/black_bishop.png", paths: ["A1", "A2", "A3"] }, highlight: false},
-        { id: "A2", occupied: { piece: "/img/black_bishop.png", paths: [] }, highlight: false},
-        { id: "A3", occupied: { piece: "", paths: [] }, highlight: false},
-        { id: "A4", occupied: { piece: "", paths: [] }, highlight: false},
-        { id: "A5", occupied: { piece: "", paths: [] }, highlight: false},
-        { id: "A6", occupied: { piece: "", paths: [] }, highlight: false},
-        { id: "A7", occupied: { piece: "/img/white_pawn.png", paths: [] }, highlight: false},
-        { id: "A8", occupied: { piece: "/img/white_knight.png", paths: [] }, highlight: false},
-        { id: "B1", occupied: { piece: "/img/black_rook.png", paths: [] }, highlight: false},
-        { id: "B2", occupied: { piece: "/img/black_bishop.png", paths: [] }, highlight: false},
-        { id: "B3", occupied: { piece: "", paths: [] }, highlight: false},
-        { id: "B4", occupied: { piece: "", paths: [] }, highlight: false},
-        { id: "B5", occupied: { piece: "", paths: [] }, highlight: false},
-        { id: "B6", occupied: { piece: "", paths: [] }, highlight: false},
-        { id: "B7", occupied: { piece: "/img/white_knight.png", paths: [] }, highlight: false},
-        { id: "B8", occupied: { piece: "/img/white_queen.png", paths: [] }, highlight: false},
-        { id: "C1", occupied: { piece: "/img/black_queen.png", paths: [] }, highlight: false},
-        { id: "C2", occupied: { piece: "/img/black_pawn.png", paths: [] }, highlight: false},
-        { id: "C3", occupied: { piece: "", paths: [] }, highlight: false},
-        { id: "C4", occupied: { piece: "", paths: [] }, highlight: false},
-        { id: "C5", occupied: { piece: "", paths: [] }, highlight: false},
-        { id: "C6", occupied: { piece: "", paths: [] }, highlight: false},
-        { id: "C7", occupied: { piece: "/img/white_pawn.png", paths: [] }, highlight: false},
-        { id: "C8", occupied: { piece: "/img/white_pawn.png", paths: [] }, highlight: false},
-        { id: "D1", occupied: { piece: "/img/black_queen.png", paths: [] }, highlight: false},
-        { id: "D2", occupied: { piece: "/img/black_bishop.png", paths: [] }, highlight: false},
-        { id: "D3", occupied: { piece: "", paths: [] }, highlight: false},
-        { id: "D4", occupied: { piece: "", paths: [] }, highlight: false},
-        { id: "D5", occupied: { piece: "", paths: [] }, highlight: false},
-        { id: "D6", occupied: { piece: "", paths: [] }, highlight: false},
-        { id: "D7", occupied: { piece: "/img/white_bishop.png", paths: [] }, highlight: false},
-        { id: "D8", occupied: { piece: "/img/white_king.png", paths: [] }, highlight: false},
-        { id: "E1", occupied: { piece: "/img/black_king.png", paths: [] }, highlight: false},
-        { id: "E2", occupied: { piece: "/img/black_knight.png", paths: [] }, highlight: false},
-        { id: "E3", occupied: { piece: "", paths: [] }, highlight: false},
-        { id: "E4", occupied: { piece: "", paths: [] }, highlight: false},
-        { id: "E5", occupied: { piece: "", paths: [] }, highlight: false},
-        { id: "E6", occupied: { piece: "", paths: [] }, highlight: false},
-        { id: "E7", occupied: { piece: "/img/white_queen.png", paths: [] }, highlight: false},
-        { id: "E8", occupied: { piece: "/img/white_queen.png", paths: [] }, highlight: false},
-        { id: "F1", occupied: { piece: "/img/black_knight.png", paths: [] }, highlight: false},
-        { id: "F2", occupied: { piece: "/img/black_pawn.png", paths: [] }, highlight: false},
-        { id: "F3", occupied: { piece: "", paths: [] }, highlight: false},
-        { id: "F4", occupied: { piece: "", paths: [] }, highlight: false},
-        { id: "F5", occupied: { piece: "", paths: [] }, highlight: false},
-        { id: "F6", occupied: { piece: "", paths: [] }, highlight: false},
-        { id: "F7", occupied: { piece: "/img/white_knight.png", paths: [] }, highlight: false},
-        { id: "F8", occupied: { piece: "/img/white_rook.png", paths: [] }, highlight: false},
-        { id: "G1", occupied: { piece: "/img/black_rook.png", paths: [] }, highlight: false},
-        { id: "G2", occupied: { piece: "/img/black_pawn.png", paths: [] }, highlight: false},
-        { id: "G3", occupied: { piece: "", paths: [] }, highlight: false},
-        { id: "G4", occupied: { piece: "", paths: [] }, highlight: false},
-        { id: "G5", occupied: { piece: "", paths: [] }, highlight: false},
-        { id: "G6", occupied: { piece: "", paths: [] }, highlight: false},
-        { id: "G7", occupied: { piece: "/img/white_knight.png", paths: [] }, highlight: false},
-        { id: "G8", occupied: { piece: "/img/white_rook.png", paths: [] }, highlight: false},
-        { id: "H1", occupied: { piece: "/img/black_pawn.png", paths: [] }, highlight: false},
-        { id: "H2", occupied: { piece: "/img/black_knight.png", paths: [] }, highlight: false},
-        { id: "H3", occupied: { piece: "", paths: [] }, highlight: false},
-        { id: "H4", occupied: { piece: "", paths: [] }, highlight: false},
-        { id: "H5", occupied: { piece: "", paths: [] }, highlight: false},
-        { id: "H6", occupied: { piece: "", paths: [] }, highlight: false},
-        { id: "H7", occupied: { piece: "/img/white_pawn.png", paths: [] }, highlight: false},
-        { id: "H8", occupied: { piece: "/img/white_queen.png", paths: [] }, highlight: false},
-      ];
+  };
+  function getImgPath(color, piece) {
+    return "/img/" + color.toLowerCase() + "_" + piece.toLowerCase() + ".png";
+  };
+  function addHighlights(board) {
+    for(var i = 0; i < board.length; i++) {
+      board[i]["highlight"] = false;
+    }
+    return board;
+  };
+  /*var tileList = [
+    { "piece": { "type": "Pawn", "movelist": [ { "x": 5, "y": 2, "tilename": "a2" }, { "x": 5, "y": 3, "tilename": "a3" }], "player": "white" }, "x": 1, "y": 5, "tilename": "a1", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "a2", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "a3", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "a4", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "a5", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "a6", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "a7", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "a8", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "b1", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "b2", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "b3", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "b4", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "b5", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "b6", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "b7", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "b8", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "c1", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "c2", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "c3", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "c4", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "c5", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "c6", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "c7", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "c8", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "d1", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "d2", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "d3", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "d4", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "d5", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "d6", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "d7", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "d8", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "e1", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "e2", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "e3", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "e4", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "e5", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "e6", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "e7", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "e8", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "f1", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "f2", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "f3", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "f4", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "f5", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "f6", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "f7", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "f8", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "g1", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "g2", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "g3", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "g4", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "g5", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "g6", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "g7", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "g8", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "h1", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "h2", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "h3", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "h4", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "h5", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "h6", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "h7", "highlight": false },
+    { "piece": { "type": "none", "movelist": [], "player": "none" }, "x": 1, "y": 5, "tilename": "h8", "highlight": false },
+        
+  ];*/
+  
   Vue.component('tile', {
     props: ['tilecode', 'colorcode', 'imgpath'],
     methods: {
@@ -163,23 +176,23 @@
           return "tile1";
         }
       },
-      setID(tilecode) {
-        return this.tilecode;
-      },
-      
       handleTileClick(tilecode) {
+        alert("Hello from " + tilecode);
         for(var i = 0; i < tileList.length; i++) {
-          if(tileList[i].id === tilecode) {
+          if(tileList[i].tilename === tilecode) {
             if(!tileList[i].highlight) {
               clearHighlights();
-              highlightPath(tileList[i].occupied.paths);
+              if(tileList[i].piece.type !== "none") {
+                tileList[i].highlight = true;
+                highlightPath(tileList[i].piece.movelist);
+              }
             }
             
           }
         }
       },
     },
-    template: '<div  :class=setColor(colorcode) :id=setID(tilecode) @click=handleTileClick(tilecode)><img :src=imgpath class="center"></div>'
+    template: '<div :class=setColor(colorcode) :id=tilecode @click=handleTileClick(tilecode)><img :src=imgpath class="center"></div>'
   });
 
   Vue.component('row', {
@@ -187,7 +200,7 @@
     methods: {
 
     },
-    template: '<div>{{rowcode}}</div>'
+    template: '<div>{{ rowcode }}</div>'
   });
 
   Vue.component('col-labels', {
@@ -207,18 +220,18 @@
     },
     methods: {
       getImage(row, col) {
-        var tilecode = String.fromCharCode(col + 64) + row;
+        var tilecode = String.fromCharCode(col + 96) + row;
         for(var i = 0; i < this.tiles.length; i++) {
-          if(this.tiles[i].id === tilecode) {
-            return this.tiles[i].occupied.piece;
+          if(this.tiles[i].tilename === tilecode && this.tiles[i].piece.type !== "none") {
+            return getImgPath(this.tiles[i].piece.player, this.tiles[i].piece.type);
           }
         }
         return "";
       },
       getColor(row, col) {
-        var tilecode = String.fromCharCode(col + 64) + row;
+        var tilecode = String.fromCharCode(col + 96) + row;
         for(var i = 0; i < this.tiles.length; i++) {
-          if(this.tiles[i].id === tilecode) {
+          if(this.tiles[i].tilename === tilecode) {
             if(this.tiles[i].highlight === false) {
               return row % 2 === 0 ? col % 2 + 1 : (col + 1) % 2 + 1;
             } else {
@@ -227,6 +240,18 @@
           } 
         }
       },
+    },
+    mounted () {
+      axios
+        .get('http://localhost:8080/eevee/getboardjson/')
+        .then(response => {
+          tileList = addHighlights(response.data.tiles);
+          this.tiles = tileList;
+        })
+        .catch(error => {
+          console.log(error)
+        })
+        
     }
   });
 
@@ -237,17 +262,7 @@
         info: 'Nothing here'
       }
     },
-    mounted () {
-      axios
-        .get('http://localhost:8080/eevee/games/')
-        .then(response => {
-          this.info = response.data;
-        })
-        .catch(error => {
-          console.log("Heres an error:\n" + error)
-        })
-        
-    }
+    
   });
 
 
