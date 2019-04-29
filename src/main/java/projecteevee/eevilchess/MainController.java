@@ -206,7 +206,7 @@ public class MainController {
         // Create board with default size
         // Player p1 = new Player("white");
         // Player p2 = new Player("black");
-        // Board b = new Board(8,8);
+        this.b = new Board(8,8);
         this.b.populateTableEevil(p1, p2);
         JSONObject json = b.getBoardJSON();
         String brd = json.toString();
