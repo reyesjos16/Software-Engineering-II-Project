@@ -35,17 +35,27 @@
       <nav class="row navbar navbar-expand-lg navbar-light">
         <div class="navbar-nav">
           <ul>
-            <li><a class="nav-item nav-link" href="./index.html"> Home </a></li>
+            <!-- <li><a class="nav-item nav-link active" href="./index.html"> Home </a></li>
             <li><a class="nav-item nav-link" href="./create-account.html"> Create Account </a></li>
             <li><a class="nav-item nav-link" href="./login.html">Login</a></li>
             <li><a class="nav-item nav-link" href="./profile.html">Profile</a></li>
             <li><a class="nav-item nav-link" href="./start-game.html">Start Game</a></li>
-            <li><a class="nav-item nav-link active" href="./play-game.html">Play Game</a></li>
+            <li><a class="nav-item nav-link" href="./play-game.html">Play Game</a></li> -->
+            <li><a class="nav-item nav-link" href="/eevee/"> Home </a></li>
+                <li><a class="nav-item nav-link" href="/eevee/createaccount"> Create Account </a></li>
+                <li><a class="nav-item nav-link" href="/eevee/login">Login</a></li>
+                <li><a class="nav-item nav-link" href="/eevee/profile">Profile</a></li>
+                <li><a class="nav-item nav-link active" href="/eevee/startgame">Start Game</a></li>
+                <li><a class="nav-item nav-link" href="./play-game">Play Game</a></li>
           </ul>
           <br style="clear:both;" />
         </div>
       </nav>
 
+      <div class="gameinfo">
+        Player turn: {{ playerTurn }}
+        <button v-show="p1Win" onclick="location.reload()">Player 1 Wins!</button>
+      </div>
       <div class="board">
         <div v-for="col in cols + 1"></div>
         <template v-for="row in rows">
@@ -55,9 +65,8 @@
         <div></div>
         <col-labels v-for="col in cols" :colcode="String.fromCharCode(col + 96)"></col-labels>
       </div>
-      <div class="axiosTest">
-        <span>{{tileList}}</span>
-      </div>
+
+
       <!-- Footer -->
       <div class="row" id="footer">
         &copy Team Eevee <br />
@@ -70,27 +79,71 @@
 <script>
 
   var tileList = [];
+  var playerTurn = "white";
+  var p1Win = false;
+  var p2Win = false;
+
+
+  async function movePiece(start, target) {
+    p1Win = true;
+    p2Win = true;
+    tileList = app.tiles;
+    startx = start.tilename[0].charCodeAt(0) - 97;
+    starty = start.tilename[1] - 1;
+    targetx = target.tilename[0].charCodeAt(0) - 97;
+    targety = target.tilename[1] - 1;
+    moveString = "start_x=" + startx + "&start_y=" + starty + "&target_x=" + targetx + "&target_y=" + targety;
+    console.log(moveString);
+    await axios.post('http://localhost:8080/eevee/move/', moveString).then()
+    await axios.get('http://localhost:8080/eevee/getcurrentboard/').then(response => app.tiles = addHighlights(response.data.tiles))
+    if(playerTurn === "white") {
+      playerTurn = "black";
+    } else {
+      playerTurn = "white";
+    }
+    if(p1Win) { 
+      alert("Player 1 Wins!")
+      await axios.get('http://localhost:8080/eevee/getrandomboardjson/').then(response => app.tiles = addHighlights(response.data.tiles))
+      playerTurn = "white";
+    }
+    else if(p2Win) { 
+      alert("Player 2 Wins!")
+      await axios.get('http://localhost:8080/eevee/getrandomboardjson/').then(response => app.tiles = addHighlights(response.data.tiles))
+      playerTurn = "white";
+    }
+    app2.$forceUpdate();
+    
+  }
 
   function highlightPath(path) {
     console.log("In highlightPath")
     for(var i = 0; i < path.length; i++) {
-      for(var j = 0; j < tileList.length; j++) {
-        if(tileList[j].tilename === path[i].tilename) {
-          tileList[j].highlight = true;
+      for(var j = 0; j < app.tiles.length; j++) {
+        if(app.tiles[j].tilename === path[i].tilename) {
+          app.tiles[j].highlight = true;
         }   
       }
     }
   };
   function clearHighlights() {
-    for(var i = 0; i < tileList.length; i++) {
-      tileList[i].highlight = false;
+    for(var i = 0; i < app.tiles.length; i++) {
+      app.tiles[i].highlight = false;
     }
   };
   function getImgPath(color, piece) {
     return "/img/" + color.toLowerCase() + "_" + piece.toLowerCase() + ".png";
   };
+
+
   function addHighlights(board) {
     for(var i = 0; i < board.length; i++) {
+      if(board[i].piece.type === "king") {
+        if(board[i].piece.player === "white") {
+          p2Win = false;
+        } else {
+          p1Win = false;
+        }
+      }
       board[i]["highlight"] = false;
     }
     return board;
@@ -110,15 +163,18 @@
         }
       },
       handleTileClick(tilecode) {
-        for(var i = 0; i < tileList.length; i++) {
-          if(tileList[i].tilename === tilecode) {
-            if(!tileList[i].highlight) {
+        for(var i = 0; i < app.tiles.length; i++) {
+          if(app.tiles[i].tilename === tilecode) {
+            if(!app.tiles[i].highlight) {
+              toMove = app.tiles[i]
               clearHighlights();
-              if(tileList[i].piece.type !== "none") {
-                tileList[i].highlight = true;
-                highlightPath(tileList[i].piece.movelist);
+              if(app.tiles[i].piece.type !== "none" && app.tiles[i].piece.player === playerTurn) {
+                app.tiles[i].highlight = true;
+                highlightPath(app.tiles[i].piece.movelist);
               }
-            }        
+            } else if(app.tiles[i].piece.player !== playerTurn) {
+              movePiece(toMove, app.tiles[i]);
+            }      
           }
         }
       },
@@ -142,6 +198,16 @@
     template: '<div>{{ colcode }}</div>'
   });
 
+  var app2 = new Vue({
+    el: ".gameinfo",
+    data: {
+      turn: playerTurn,
+    },
+    methods: {
+        
+    },
+  });
+
   var app = new Vue({
     el: ".board",
     data: {
@@ -157,7 +223,7 @@
             return getImgPath(this.tiles[i].piece.player, this.tiles[i].piece.type);
           }
         }
-        return "";
+        return null;
       },
       getColor(row, col) {
         var tilecode = String.fromCharCode(col + 96) + row;
@@ -172,32 +238,21 @@
         }
         return "empty";
       },
+      clearBoard() {
+        this.tiles = [];
+      }
     },
     mounted () {
       axios
         .get('http://localhost:8080/eevee/getrandomboardjson/')
         .then(response => {
-          tileList = addHighlights(response.data.tiles);
-          console.log(tileList);
-          this.tiles = tileList;
+          this.tiles = addHighlights(response.data.tiles);
         })
         .catch(error => {
           console.log(error)
-        })
-        
-    }
-  });
-
-  var app2 = new Vue({
-    el: ".axiosTest",
-    data () {
-      return {
-        info: tileList
-      }
+        })    
     },
-    
   });
-
 
 </script>
 
@@ -208,6 +263,11 @@
     display: grid;
     grid-template-columns: repeat(9, 1fr);
     grid-auto-rows: minmax(50px, auto);
+  }
+
+  .gameinfo {
+    margin: 0 auto;
+    text-align: center;
   }
 
   .tile1 {

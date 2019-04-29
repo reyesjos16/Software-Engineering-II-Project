@@ -16,6 +16,17 @@ public class Pawn extends Piece {
     public void capture(){captured = true;}
     public boolean captured(){return captured;}
 
+    public void move(int x, int y)
+    {
+        this.board.getTile(this.getXcoordinate(), this.getYcoordinate()).setPiece(null);
+        this.xcoordinate = x;
+        this.ycoordinate = y;
+        this.board.placeOnTile(x, y, this);
+        this.firstMove = false;
+        this.updateMoves();
+        
+    }
+
     private ArrayList<Tile> diagonalMovement() {
         ArrayList<Tile> validMove = new ArrayList<>();
         Tile nextMove;

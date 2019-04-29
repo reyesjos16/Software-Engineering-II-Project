@@ -27,6 +27,12 @@ public class MainController {
     @Autowired
     private GameRepository gameRepository;
 
+    // Create a persistent board for a game of chess
+    public Player p1 = new Player("white");
+    public Player p2 = new Player("black");
+    public Board b = new Board(8,8);
+    //b.populateTableEevil(p1, p2);
+    
     @PostMapping(path = "/newgame")
     public @ResponseBody String createNewGame(@RequestParam String gameID, @RequestParam String player1,
             @RequestParam String player2) {
@@ -174,14 +180,21 @@ public class MainController {
         return "play-game";
     }
 
+    @PostMapping(path = "/move")
+    public @ResponseBody String makeMove(@RequestParam String start_x, @RequestParam String start_y, @RequestParam String target_x, @RequestParam String target_y)
+    {
+        this.b.checkmove(Integer.parseInt(start_x), Integer.parseInt(start_y), Integer.parseInt(target_x), Integer.parseInt(target_y));
+        return start_x + " " + start_y + " " + target_x + " " + target_y + "\n";
+    }
+
     @GetMapping(path="/getnormalboardjson")
     public @ResponseBody String getNormalBoardJSON()
     {
         // Create board with default size
-        Player p1 = new Player("white");
-        Player p2 = new Player("black");
-        Board b = new Board(8,8);
-        b.populateTableNormal(p1, p2);
+        // Player p1 = new Player("white");
+        // Player p2 = new Player("black");
+        // Board b = new Board(8,8);
+        this.b.populateTableNormal(p1, p2);
         JSONObject json = b.getBoardJSON();
         String brd = json.toString();
         return brd;
@@ -191,11 +204,19 @@ public class MainController {
     public @ResponseBody String getRandomBoardJSON()
     {
         // Create board with default size
-        Player p1 = new Player("white");
-        Player p2 = new Player("black");
-        Board b = new Board(8,8);
-        b.populateTableEevil(p1, p2);
+        // Player p1 = new Player("white");
+        // Player p2 = new Player("black");
+        this.b = new Board(8,8);
+        this.b.populateTableEevil(p1, p2);
         JSONObject json = b.getBoardJSON();
+        String brd = json.toString();
+        return brd;
+    }
+
+    @GetMapping(path="/getcurrentboard")
+    public @ResponseBody String getCurrentBoard()
+    {
+        JSONObject json = this.b.getBoardJSON();
         String brd = json.toString();
         return brd;
     }

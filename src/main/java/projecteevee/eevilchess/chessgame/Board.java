@@ -60,6 +60,7 @@ public class Board
         final int RAND_BOUND = 101;
         //Random number must be <= the difficulty of the piece to become that piece
         //This is determined by lowest order piece first (Pawn < Knight < Rook < Bishop < Queen)
+        difficultyfactor = 10;
         final int PAWN_DIFFICULTY = (RAND_BOUND - 1)/5;
         final int KNIGHT_DIFFICULTY = 2*(RAND_BOUND - 1)/5;
         final int ROOK_DIFFICULTY = 3*(RAND_BOUND - 1)/5;
@@ -94,13 +95,14 @@ public class Board
             //Bishop
             return new Bishop(xpos, ypos, p, this);
         }
-        else if(random <= ((QUEEN_DIFFICULTY*difficultysensitivity)))
+        else
         {
             //Queen
             return new Queen(xpos, ypos, p, this);
         }
         //This will never be hit unless the random number generator breaks
-        return null;
+        //System.out.println("We broke it:\nrandom = " + random + "\ndifficlutyfactor = " + difficultyfactor);
+        //return null;
     }
 
     private Piece getRandomPiece(int xpos, int ypos, Player p)
@@ -366,6 +368,7 @@ public class Board
             if(temp.getMovelist().contains(this.getTile(targetx, targety)))
             {
                 temp.move(targetx, targety);
+                reCheckMoves();
                 return true;
             }
         }
